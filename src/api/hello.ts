@@ -9,5 +9,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  res.setHeader('Authorization', `Bearer ${Math.random()}`)
   res.status(200).json({ name: 'John Doe' })
 }
