@@ -1,5 +1,5 @@
 import { DOMAttributes } from 'react'
-import type {TodoItemProps} from 'src/types/todoList/TodoListType'
+import type {TodoItemProps} from 'src/interface/todoList/TodoListType'
 
 const TodoItem = (props: TodoItemProps) => {
     function onClickRemove() : void{

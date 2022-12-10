@@ -1,5 +1,5 @@
 import TodoItem from './ToDoItem';
-import type {TodoListProps} from 'src/types/todoList/TodoListType'
+import type {TodoListProps} from 'src/interface/todoList/TodoListType'
 
 const ToDoBoard = (props: TodoListProps) => {
 
