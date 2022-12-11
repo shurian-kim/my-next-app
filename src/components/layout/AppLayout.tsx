@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Head from 'next/head'
 import styles from '/src/styles/Home.module.css'
 import hMenuStyle from '/src/styles/Header.module.css'
+// import classNames from 'classnames';
 // import sMenuStyle from '/src/styles/Sidebar.module.css'
 // import PropTypes from 'prop-types'
 
@@ -40,8 +41,8 @@ const AppLayout = ({ children }: any) => {
                             <li><Link href="/kakao">kakao</Link></li>
                             <li><Link href="/toDoList">todoList</Link></li>
                         </ul>
-                        <i className="fab fa-twitter-square"></i>
-                        <i className="fas fa-bars"></i>
+                        <i className={[hMenuStyle.fab, hMenuStyle.fa_twitter_squar].join(' ')}></i>
+                        <i className={[hMenuStyle.fas, hMenuStyle.fa_bars].join(' ')}></i>
                     </article>
                 </section>
             </header>
