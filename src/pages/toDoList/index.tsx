@@ -1,4 +1,5 @@
 import { useState } from "react"
+import AppLayout from "src/components/layout/AppLayout";
 import ToDoBoard from '../../components/todoList/ToDoBoard';
 
 const TodoList = () => {
@@ -24,11 +25,13 @@ const TodoList = () => {
     }
 
     console.log('render todoList = ', todoList)
-    return <>
-        <input type="text" value={inputValue} onChange={changeInputValue} placeholder="할일을 입력하세요." />
-        <button onClick={addItem}>추가</button>
-        <ToDoBoard todoList={todoList} removeItem={removeItem}></ToDoBoard>
-    </>
+    return (
+        <AppLayout>
+            <input type="text" value={inputValue} onChange={changeInputValue} placeholder="할일을 입력하세요." />
+            <button onClick={addItem}>추가</button>
+            <ToDoBoard todoList={todoList} removeItem={removeItem}></ToDoBoard>
+        </AppLayout>
+    )
 }
 
 export default TodoList

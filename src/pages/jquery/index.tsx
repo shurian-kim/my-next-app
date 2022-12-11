@@ -1,5 +1,6 @@
 import Script from "next/script"
 import { useEffect, useState } from "react"
+import AppLayout from "src/components/layout/AppLayout"
 
 const JqueryTest = () => {
 
@@ -22,11 +23,11 @@ const JqueryTest = () => {
     },[])
 
     return (
-        <div>
+        <AppLayout>
             <Script src="https://code.jquery.com/jquery-3.6.1.min.js" onLoad={initJquery}></Script>
             <div id="jQueryTest" onClick={jqTest}>제이쿼리 테스트</div>
             <div>{cloneHtml}</div>
-        </div>
+        </AppLayout>
     )
 }
 
