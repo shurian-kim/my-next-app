@@ -5,10 +5,9 @@ import AppLayout from 'src/components/layout/AppLayout'
 // import fs from 'fs';
 // import path from 'path'
 
-
 export default function Home({ Component, pageProps }: AppProps) {
-  console.log('process.env.NEXT_PUBLIC_ACCESS_TOCKEN = ', process.env.NEXT_PUBLIC_ACCESS_TOCKEN)
-  console.log(pageProps)
+  // console.log('process.env.NEXT_PUBLIC_ACCESS_TOCKEN = ', process.env.NEXT_PUBLIC_ACCESS_TOCKEN)
+  // console.log(pageProps)
   return (
     <AppLayout>
       토큰 : {process.env.NEXT_PUBLIC_ACCESS_TOCKEN}
