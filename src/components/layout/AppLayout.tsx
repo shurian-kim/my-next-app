@@ -32,7 +32,7 @@ const AppLayout = ({ children }: any) => {
 
             <header>
                 <section className={hMenuStyle.hbody}>
-                    <article className={hMenuStyle.nav}>
+                    <nav className={hMenuStyle.nav}>
                         <div className={hMenuStyle.title}><Link href="/">DJK</Link></div>
                         <ul className={hMenuStyle.menu}>
                             <li><Link href="/">home</Link></li>
@@ -43,10 +43,10 @@ const AppLayout = ({ children }: any) => {
                         </ul>
                         <i className={[hMenuStyle.fab, hMenuStyle.fa_twitter_squar].join(' ')}></i>
                         <i className={[hMenuStyle.fas, hMenuStyle.fa_bars].join(' ')}></i>
-                    </article>
+                    </nav>
                 </section>
             </header>
-            <main>{children}</main>
+            <main style={{padding:'70px 50px'}}>{children}</main>
             <footer className="footer">
             </footer>
         </div>
