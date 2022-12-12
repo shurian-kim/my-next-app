@@ -33,7 +33,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
               ?
               <Component {...props} />
               :
-              < Login {...props} />
+              <Login {...props} />
           }
           <ReactQueryDevtools />
         </QueryClientProvider>
