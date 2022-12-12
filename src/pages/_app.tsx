@@ -1,15 +1,10 @@
-import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from 'recoil';
+import {  RecoilRoot} from 'recoil';
 import type { AppProps } from 'next/app';
 import '../styles/globals.css';
+import Login from './login';
+import { passPageAuth } from 'src/utils/authenticator';
 
 
 export const queryClient = new QueryClient({
@@ -20,12 +15,26 @@ export const queryClient = new QueryClient({
   }
 })
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps, router }: AppProps) {
+
+  const props: any = { ...pageProps }
+
+  const isPassPageAuth = passPageAuth(router)
+  if (!isPassPageAuth) {
+    props.redirectUrl = router.pathname;
+  }
+
   return (
     <div>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          <Component {...pageProps} />
+          {
+            isPassPageAuth
+              ?
+              <Component {...props} />
+              :
+              < Login {...props} />
+          }
           <ReactQueryDevtools />
         </QueryClientProvider>
       </RecoilRoot>
