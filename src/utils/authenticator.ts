@@ -1,29 +1,6 @@
 import { Router } from "next/router";
 import { checkAuthorization } from "src/api/auth/AuthCheck";
-
-class PublicPathManage {
-
-    #pulbicPath:Array<string> = [
-        '/404',
-        '/500',
-        // "/toDoList"
-        // , "/kakao"
-        // , "/toDoList"
-    ]
-
-    constructor() {
-
-    }
-
-    #getPublicPath():Array<string>{
-        return this.#pulbicPath;
-    }
-
-    getPath():Array<string>{
-        return this.#getPublicPath()
-    }
-
-}
+import { PublicPathManager } from "./PublicPathManager";
 
 /**
  * 페이지 권한 통과 여부
@@ -39,7 +16,7 @@ export const passPageAuth = (router: Router) => {
     }
 
     // public path
-    if (routerPath === '/' || new PublicPathManage().getPath().includes(routerPath)) {
+    if (routerPath === '/' || PublicPathManager.path.includes(routerPath)) {
         return true
     }
 
