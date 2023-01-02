@@ -4,6 +4,7 @@ class PublicPathManager {
         '/404',
         '/500',
         "/toDoList",
+        "/post",
         //"/kakao",
         //"/toDoList",
     ]
