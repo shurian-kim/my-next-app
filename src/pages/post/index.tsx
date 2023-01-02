@@ -30,11 +30,6 @@ export default postRequestTest;
 
 export const getServerSideProps:GetServerSideProps = async (context) =>{
 
-    if (context.req.method == "POST") {
-        const body = await getRawBody(context.req)
-        console.log(body.toString("utf-8"))
-    }
-
     const body = await parseBody(context.req, '1mb') || {};
 
     console.log('body ====>>>>> ', body)
