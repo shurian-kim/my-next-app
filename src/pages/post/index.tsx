@@ -1,5 +1,7 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { parseBody } from "next/dist/server/api-utils/node";
+// import { parseBody } from 'next/dist/server/api-utils' // node 12
+import { parseBody } from "next/dist/server/api-utils/node"; // node 12.2
+// import getRowBody from "row-body"
 import { useState } from 'react';
 import { useEffect } from 'react';
 
@@ -27,6 +29,11 @@ const postRequestTest = (props:serverSideProps) =>{
 export default postRequestTest;
 
 export const getServerSideProps:GetServerSideProps = async (context) =>{
+
+    if (context.req.method == "POST") {
+        const body = await getRawBody(context.req)
+        console.log(body.toString("utf-8"))
+    }
 
     const body = await parseBody(context.req, '1mb') || {};
 
