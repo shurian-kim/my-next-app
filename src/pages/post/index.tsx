@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 interface serverSideProps {
-    requestBody:Object
+    requestParam:Object
 }
 
 const postRequestTest = (props:serverSideProps) =>{
@@ -14,27 +14,38 @@ const postRequestTest = (props:serverSideProps) =>{
     const [postPrams, setPostParams] = useState<Object>();
 
     useEffect(()=>{
-        setPostParams(props.requestBody);
+        setPostParams(props);
     }, [])
 
-    console.log("postRequestTest props = ", )
+    console.log("postRequestTest props = ", props)
     return (
         <div>
             Post Request param test
-            <div>{JSON.stringify(postPrams)}</div>
+            <div>{JSON.stringify(props)}</div>
         </div>
     )
 }
 
 export default postRequestTest;
 
-export const getServerSideProps:GetServerSideProps = async (context) =>{
+export const getServerSideProps:GetServerSideProps = async (context: GetServerSidePropsContext) =>{
 
-    const body = await parseBody(context.req, '1mb') || {};
+    const method = context.req?.method;
+    let requestParam = {}
+    
+    switch(method){
+        case "POST" :
+            const body = await parseBody(context.req, '1mb') || {};
+            requestParam = body
+            break;
+        case "GET" :
+            requestParam = context.req.cookies;
+            break;
+    }
 
-    console.log('body ====>>>>> ', body)
+    console.log(`[${method}]requestParam ====>>>>> `, requestParam);
 
     return{
-        props:{requestBody : body}
+        props:requestParam
     }
 }
