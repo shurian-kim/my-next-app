@@ -2,6 +2,7 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 // import { parseBody } from 'next/dist/server/api-utils' // node 12
 import { parseBody } from "next/dist/server/api-utils/node"; // node 12.2
+import { useRouter } from 'next/router';
 // import getRowBody from "row-body"
 import { useState, useEffect } from 'react';
 
@@ -13,6 +14,11 @@ interface serverSideProps {
 const postRequestTest = (props: serverSideProps): JSX.Element => {
 
     const [postPrams, setPostParams] = useState<unknown>();
+    const router = useRouter();
+
+    useEffect(()=>{
+        console.log('router.query => ', router.query);
+    },[])
 
     useEffect(() => {
         if (typeof props !== "undefined") {
