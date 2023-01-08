@@ -48,7 +48,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
                 requestParam = await parseBody(context.req, '1mb');
                 break;
             case "GET":
-                console.log('context.req.cookies :', context.req.cookies);
                 requestParam = context.query ?? {};
                 break;
         }
