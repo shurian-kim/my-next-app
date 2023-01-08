@@ -1,10 +1,10 @@
 import { useState } from "react"
 import AppLayout from "src/components/layout/AppLayout";
-import ToDoBoard from '../../components/todoList/ToDoBoard';
+import ToDoBoard from 'src/components/todoList/ToDoBoard';
 
-const TodoList = () => {
+const TodoList = (): JSX.Element => {
     const [inputValue, setInputValue] = useState<string>('')
-    const [todoList, setTodoList] = useState<Array<string>>([])
+    const [todoList, setTodoList] = useState<string[]>([])
 
     const addItem = (): void => {
         if (inputValue.trim().length < 1) {

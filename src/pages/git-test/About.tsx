@@ -2,7 +2,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import AppLayout from "src/components/layout/AppLayout"
 
-function About() {
+const About = (): JSX.Element => {
 
     const router = useRouter()
 
@@ -18,19 +18,19 @@ function About() {
                 <button type="button" style={{
                     display: 'block',
                     margin: '10px'
-                }} onClick={() => router.back()}>History Back!!</button>
+                }} onClick={() => { router.back() }}>History Back!!</button>
                 <button type="button" style={
                     {
                         display: 'block',
                         margin: '10px'
                     }
-                } onClick={()=>router.push('Hello')}>Router Push!!</button>
+                } onClick={() => async () => await router.push('Hello')}>Router Push!!</button>
                 <button type="button" style={
                     {
                         display: 'block',
                         margin: '10px'
                     }
-                } onClick={()=>router.replace('Hello')}>Router Replace!!</button>
+                } onClick={() => async () => await router.replace('Hello')}>Router Replace!!</button>
             </div>
         </AppLayout>
     )

@@ -1,3 +1,3 @@
-import Window from "../global";
+import Window from "src/types/global";
 
 declare module 'next-jquery'

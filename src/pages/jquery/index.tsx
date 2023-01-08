@@ -2,25 +2,24 @@ import Script from "next/script"
 import { useEffect, useState } from "react"
 import AppLayout from "src/components/layout/AppLayout"
 
-const JqueryTest = () => {
+const JqueryTest = (): JSX.Element => {
 
     const [cloneHtml, setCloleHtml] = useState<string>('')
 
-    const initJquery = () => {
+    const initJquery = (): void => {
         console.log(`initJquery window.jQuery = `, window.jQuery)
         setCloleHtml(window.jQuery('#jQueryTest').html())
     }
 
-    const jqTest = () => {
-
-        setCloleHtml(window.jQuery('#jQueryTest').html() + ' Click!!')
+    const jqTest = (): void => {
+        setCloleHtml(`${window.jQuery('#jQueryTest').html() as string} Click!!`);
 
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(`window = `, window)
-        console.log(`useEffect window.jQuery = ${window.jQuery}`)
-    },[])
+        console.log(`useEffect window.jQuery =`, window.jQuery)
+    }, [])
 
     return (
         <AppLayout>

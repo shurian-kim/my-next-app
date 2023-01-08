@@ -5,7 +5,7 @@ import AppLayout from 'src/components/layout/AppLayout'
 // import fs from 'fs';
 // import path from 'path'
 
-export default function Home({ Component, pageProps }: AppProps) {
+export default function Home({ Component, pageProps }: AppProps): JSX.Element {
   // console.log('process.env.NEXT_PUBLIC_ACCESS_TOCKEN = ', process.env.NEXT_PUBLIC_ACCESS_TOCKEN)
   // console.log(pageProps)
   return (

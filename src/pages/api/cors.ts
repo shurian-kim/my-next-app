@@ -11,21 +11,22 @@ const cors = Cors({
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
-) {
+): Promise<void> {
   // Run the middleware
   await runMiddleware(req, res, cors)
 
   let requestParams = {};
-  if(req.method === 'POST'){
-    const { name, message } = req.body;
-    requestParams = req.body;
-    console.log('name : ', name);
-    console.log('message : ', message);
-  }else{
-    requestParams = req.query;
+
+  switch (req.method) {
+    case "POST":
+      requestParams = req.body;
+      break;
+    case "GET":
+      requestParams = req.query;
+      break;
   }
 
-  console.log(`[${req.method}] requestParams : `, requestParams);
+  console.log(`[${req.method ?? ""}] requestParams : `, requestParams);
 
   // Rest of the API logic
   res.json({ message: requestParams })

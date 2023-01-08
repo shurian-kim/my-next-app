@@ -2,14 +2,14 @@ import Link from "next/link"
 import React, { useState } from "react"
 import AppLayout from "src/components/layout/AppLayout"
 
-function Hello() {
+const Hello = (): JSX.Element => {
     const [cnt, setCnt] = useState<number>(1)
 
-    const increaseCnt = (increaseCnt: number) => {
+    const increaseCnt = (increaseCnt: number): void => {
         setCnt(cnt + increaseCnt)
     }
 
-    const initCnt = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const initCnt = (e: React.MouseEvent<HTMLButtonElement>): void => {
         setCnt(1)
     }
     return (

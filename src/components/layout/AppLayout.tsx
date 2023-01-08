@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import Head from 'next/head'
-import styles from '/src/styles/Home.module.css'
-import hMenuStyle from '/src/styles/Header.module.css'
+import styles from 'src/styles/Home.module.css'
+import hMenuStyle from 'src/styles/Header.module.css'
+import { ReactNode } from 'react';
 // import classNames from 'classnames';
 // import sMenuStyle from '/src/styles/Sidebar.module.css'
 // import PropTypes from 'prop-types'
 
-const AppLayout = ({ children }: any) => {
+const AppLayout = ({ children }: { children: ReactNode }): JSX.Element => {
     return (
         <div className={styles.container}>
             <Head>
@@ -46,7 +47,7 @@ const AppLayout = ({ children }: any) => {
                     </nav>
                 </section>
             </header>
-            <main style={{padding:'70px 50px'}}>{children}</main>
+            <main style={{ padding: '70px 50px' }}>{children}</main>
             <footer className="footer">
             </footer>
         </div>

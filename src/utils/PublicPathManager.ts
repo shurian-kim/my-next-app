@@ -1,23 +1,21 @@
 class PublicPathManager {
 
-    #pulbicPath:Array<string> = [
+    #pulbicPath: string[] = [
         '/404',
         '/500',
         "/toDoList",
         "/post",
-        //"/kakao",
-        //"/toDoList",
+        // "/kakao",
+        // "/toDoList",
     ]
 
-    constructor() {
+    constructor() { }
 
-    }
-
-    #getPublicPath():Array<string>{
+    #getPublicPath(): string[] {
         return this.#pulbicPath;
     }
 
-    get path():Array<string>{
+    get path(): string[] {
         return this.#getPublicPath()
     }
 

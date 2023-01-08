@@ -2,6 +2,6 @@
  * Authorization check
  * @returns boolean
  */
-export function checkAuthorization() {
+export function checkAuthorization(): boolean {
     return false
 }

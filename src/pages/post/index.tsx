@@ -1,23 +1,32 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 // import { parseBody } from 'next/dist/server/api-utils' // node 12
 import { parseBody } from "next/dist/server/api-utils/node"; // node 12.2
 // import getRowBody from "row-body"
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 interface serverSideProps {
-    requestParam:Object
+    method: string
+    requestParams: unknown
 }
 
-const postRequestTest = (props:serverSideProps) =>{
+const postRequestTest = (props: serverSideProps): JSX.Element => {
 
-    const [postPrams, setPostParams] = useState<Object>();
+    const [postPrams, setPostParams] = useState<unknown>();
 
-    useEffect(()=>{
-        setPostParams(props);
-    }, [])
+    useEffect(() => {
+        if (typeof props !== "undefined") {
+            console.log("setPostParams >>>>>>>>>>>>>>")
+            setPostParams(props);
+        }
+    }, [props]);
 
-    console.log("postRequestTest props = ", props)
+    useEffect(() => {
+        if (typeof postPrams !== "undefined") {
+            console.log("postRequestTest props = ", postPrams);
+        }
+    }, [postPrams])
+
     return (
         <div>
             Post Request param test
@@ -28,24 +37,33 @@ const postRequestTest = (props:serverSideProps) =>{
 
 export default postRequestTest;
 
-export const getServerSideProps:GetServerSideProps = async (context: GetServerSidePropsContext) =>{
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
 
-    const method = context.req?.method;
-    let requestParam = {}
-    
-    switch(method){
-        case "POST" :
-            const body = await parseBody(context.req, '1mb') || {};
-            requestParam = body
-            break;
-        case "GET" :
-            requestParam = context.req.cookies;
-            break;
+    const method = context.req?.method ?? "";
+    let requestParam: any = {}
+
+    try {
+        switch (method) {
+            case "POST":
+                requestParam = await parseBody(context.req, '1mb');
+                break;
+            case "GET":
+                console.log('context.req.cookies :', context.req.cookies);
+                requestParam = context.query ?? {};
+                break;
+        }
+    } catch (e) {
+        console.error(e);
+        requestParam = await parseBody(context.req, '1mb');
+        console.log('catch requestParam : ', requestParam);
     }
 
     console.log(`[${method}]requestParam ====>>>>> `, requestParam);
 
-    return{
-        props:requestParam
+    return {
+        props: {
+            method,
+            requestParam
+        }
     }
 }

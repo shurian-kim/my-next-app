@@ -1,0 +1,52 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "next/core-web-vitals",
+        "standard-with-typescript",
+        "prettier"
+    ],
+    "overrides": [
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": ["tsconfig.json"]
+    },
+    "plugins": [
+        "react", "react-hooks", "@typescript-eslint"
+    ],
+    "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-unused-expressions": "warn",
+        "react-hooks/rules-of-hooks": "off", // Checks rules of Hooks
+        "no-useless-constructor": "off",
+        "@typescript-eslint/no-useless-constructor": "warn",
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": "warn",
+        "react/display-name": ["off", { "ignoreTranspilerName": false }],
+        "import/no-anonymous-default-export": ["off", {
+            "allowArray": false,
+            "allowArrowFunction": false,
+            "allowAnonymousClass": false,
+            "allowAnonymousFunction": false,
+            "allowCallExpression": true, // The true value here is for backward compatibility
+            "allowLiteral": false,
+            "allowObject": false
+        }]
+        // "react/react-in-jsx-scope": "off",
+        // "react/jsx-props-no-spreading": "off",
+        // "@typescript-eslint/strict-boolean-expressions": "warn",
+        // "@typescript-eslint/explicit-function-return-type": "warn",
+        // "no-unused-expressions": "off",
+        // "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+        // "no-case-declarations": "warn"
+    }
+}

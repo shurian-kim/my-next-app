@@ -7,11 +7,11 @@ import { PublicPathManager } from "./PublicPathManager";
  * @param router Router
  * @returns 
  */
-export const passPageAuth = (router: Router) => {
+export const passPageAuth = (router: Router): boolean => {
     const routerPath = router.pathname;
 
     // 페이지 오류 case
-    if(router.route === '/_error'){
+    if (router.route === '/_error') {
         return true;
     }
 

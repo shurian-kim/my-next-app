@@ -1,9 +1,9 @@
 export interface TodoListProps {
-    todoList: Array<string>
+    todoList: string[]
     removeItem?: (index: number) => void
 }
 
 export interface TodoItemProps {
     todoItem: string
-    removeItem?: Function
+    removeItem?: () => void
 }

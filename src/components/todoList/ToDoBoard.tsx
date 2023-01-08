@@ -1,7 +1,7 @@
 import TodoItem from './ToDoItem';
-import type {TodoListProps} from 'src/interface/todoList/TodoListType'
+import type { TodoListProps } from 'src/interface/todoList/TodoListType'
 
-const ToDoBoard = (props: TodoListProps) => {
+const ToDoBoard = (props: TodoListProps): JSX.Element => {
 
     return (
         <div>
@@ -13,11 +13,15 @@ const ToDoBoard = (props: TodoListProps) => {
                     todoItem={element}
                     removeItem={
                         typeof (props.removeItem) === 'function'
-                            ? () => props.removeItem ? props.removeItem(index) : null
+                            ? (): void => {
+                                if (typeof props.removeItem !== "undefined") {
+                                    props.removeItem(index);
+                                }
+                            }
                             : undefined}
                 ></TodoItem>
             })}
-        </div>
+        </div >
     )
 }
 
