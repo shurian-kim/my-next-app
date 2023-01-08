@@ -18,7 +18,7 @@ const postRequestTest = (props: serverSideProps): JSX.Element => {
 
     useEffect(()=>{
         console.log('router.query => ', router.query);
-    },[])
+    },[router.query])
 
     useEffect(() => {
         if (typeof props !== "undefined") {

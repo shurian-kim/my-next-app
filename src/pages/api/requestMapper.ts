@@ -14,6 +14,28 @@ export default async function handler(
     await runMiddleware(req, res, cors);
 
     // res.setHeader("Content-Type", "application/json")
+    
+    // 401 Unauthorized : 인증(authenticated)에 대한 이야기다 (사용자 인증)
+    // 403 Forbidden : 권한(authorized)에 대한 내용이다. ( 해당 컨텐츠에대한 접근 권한 )
+    // 405 Method Not Allowed : 클라이언트의 요청이 허용되지 않는 메소드인 경우
+    // const requesMethod = req.method;
+
+    const requesMethod = req.method === "GET" ? 'PUT' : req.method??"";
+
+    console.log(`METHOD : ${requesMethod}`);
+    if(requesMethod !== "POST" && requesMethod !== "GET"){
+        res.status(405).send(
+            {
+                "errors" :{
+                    "method": requesMethod,
+                    "code": 405,
+                    "message": "허용되지 않은 요청 메소드 입니다."
+                }
+            }
+        )
+        res.end();
+        return;
+    }
 
     // parameter LOG S
     let requestParams: { 
@@ -24,7 +46,7 @@ export default async function handler(
         param5?: string[] 
     } = {};
     
-    switch (req.method) {
+    switch (requesMethod) {
         case "POST":
             requestParams = req.body;
             break;
@@ -32,7 +54,7 @@ export default async function handler(
             requestParams = req.query;
             break;
     }
-    console.log(`[${req.method ?? ""}] requestParams : `, requestParams);
+    console.log(`[${requesMethod ?? ""}] requestParams : `, requestParams);
     // parameter LOG E
 
     const redirectUrl = `/requestMapper${getQueryString(req)}`;
