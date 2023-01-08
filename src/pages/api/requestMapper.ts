@@ -2,40 +2,25 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import Cors from 'cors'
 import runMiddleware from 'src/middleware/runMiddleare';
 import {getQueryString} from 'src/utils/StringUtils';
+import {requestPermitedCheck} from 'src/utils/authenticator';
 // import { setCookie } from 'src/utils/cookies'
 
 const cors = Cors({ methods: ['POST', 'GET', 'HEAD'] })
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
-): Promise<void> {
+export default async function handler(req: NextApiRequest,res: NextApiResponse): Promise<void> {
+
     // Run the middleware
     await runMiddleware(req, res, cors);
-
-    // res.setHeader("Content-Type", "application/json")
+    // permition check
+    requestPermitedCheck(req, res,  
+        {
+            methods : ["POST", "GET"],
+            origin : ["https://www.kbstar.com/"]
+        }
+    );
     
-    // 401 Unauthorized : 인증(authenticated)에 대한 이야기다 (사용자 인증)
-    // 403 Forbidden : 권한(authorized)에 대한 내용이다. ( 해당 컨텐츠에대한 접근 권한 )
-    // 405 Method Not Allowed : 클라이언트의 요청이 허용되지 않는 메소드인 경우
-    // const requesMethod = req.method;
-
-    const requesMethod = req.method === "GET" ? 'PUT' : req.method??"";
-
-    console.log(`METHOD : ${requesMethod}`);
-    if(requesMethod !== "POST" && requesMethod !== "GET"){
-        res.status(405).send(
-            {
-                "errors" :{
-                    "method": requesMethod,
-                    "code": 405,
-                    "message": "허용되지 않은 요청 메소드 입니다."
-                }
-            }
-        )
-        res.end();
-        return;
-    }
+    // res.setHeader("Content-Type", "application/json")
+    const requesMethod = req.method ?? "";
 
     // parameter LOG S
     let requestParams: { 
