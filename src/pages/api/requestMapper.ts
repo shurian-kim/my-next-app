@@ -11,7 +11,7 @@ export default async function handler(
     res: NextApiResponse
 ): Promise<void> {
     // Run the middleware
-    await runMiddleware(req, res, cors)
+    await runMiddleware(req, res, cors);
 
     // res.setHeader("Content-Type", "application/json")
 
@@ -25,12 +25,12 @@ export default async function handler(
     } = {};
     
     switch (req.method) {
-    case "POST":
-        requestParams = req.body;
-        break;
-    case "GET":
-        requestParams = req.query;
-        break;
+        case "POST":
+            requestParams = req.body;
+            break;
+        case "GET":
+            requestParams = req.query;
+            break;
     }
     console.log(`[${req.method ?? ""}] requestParams : `, requestParams);
     // parameter LOG E
