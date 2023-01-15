@@ -3,7 +3,7 @@
     "baseUrl": ".",
     // "rootDir":".",
     "paths": {
-      "src/*": ["src/*"]
+      "@/*": ["src/*"]
     },
     "target": "ES6",
     "lib": ["dom", "dom.iterable", "esnext"],

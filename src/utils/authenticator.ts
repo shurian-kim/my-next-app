@@ -24,8 +24,8 @@ export const passPageAuth = (router: Router): boolean => {
     return checkAuthorization();
 };
 
-export interface alowedOptionsType{
-    "origin"?: string[], 
+export interface alowedOptionsType {
+    "origin"?: string[],
     "methods"?: string[],
     "headers"?: string[]
 }
@@ -40,26 +40,26 @@ export interface alowedOptionsType{
  * // 403 Forbidden : 권한(authorized)에 대한 내용이다. ( 해당 컨텐츠에대한 접근 권한 )
  * // 405 Method Not Allowed : 클라이언트의 요청이 허용되지 않는 메소드인 경우
  */
-export const requestPermitedCheck = (req: NextApiRequest, res: NextApiResponse, allowOptions?:alowedOptionsType) : void => {
+export const requestPermitedCheck = (req: NextApiRequest, res: NextApiResponse, allowOptions?: alowedOptionsType): void => {
 
     const requesMethod = req.method ?? "";
     const requestReferer = req.headers.referer ?? "";
     let requestRefererDomain = "";
-    
+
     const requestDomainMatcher = requestReferer.match(/(^http(s)?:\/\/[a-zA-Z0-9.]+(:([0-9]*))?)/ig);;
-    if( requestDomainMatcher !== null ){
+    if (requestDomainMatcher !== null) {
         requestRefererDomain = requestDomainMatcher[0];
     }
     console.log('requestReferer : ', requestReferer);
     console.log("requestRefererDomain : ", requestRefererDomain);
-    
-    const allowedUrls = [...allowOptions?.origin??[], ...['http://localhost:8080', 'https://localhost:8080', 'http://localhost:3000', 'https://localhost:3000']];
+
+    const allowedUrls = [...allowOptions?.origin ?? [], ...['http://localhost:8080', 'https://localhost:8080', 'http://localhost:3000', 'https://localhost:3000']];
     console.log("permittedUrls.includes(requestRefererDomain) : ", allowedUrls.includes(requestRefererDomain));
-    
-    if(!allowedUrls.includes(requestRefererDomain)){
+
+    if (!allowedUrls.includes(requestRefererDomain)) {
         res.status(401).send(
             {
-                "errors" :{
+                "errors": {
                     "code": 401,
                     "message": "접근 권한이 없습니다."
                 }
@@ -70,11 +70,11 @@ export const requestPermitedCheck = (req: NextApiRequest, res: NextApiResponse, 
     // const requesMethod = req.method === "GET" ? 'PUT' : req.method ?? "";
 
     console.log(`METHOD : ${requesMethod}`);
-    const allowedMethods = allowOptions?.methods??["GET", "HEAD", "POST","PUT", "DELETE"];
-    if(!allowedMethods.includes(requesMethod)){
+    const allowedMethods = allowOptions?.methods ?? ["GET", "HEAD", "POST", "PUT", "DELETE"];
+    if (!allowedMethods.includes(requesMethod)) {
         res.status(405).send(
             {
-                "errors" :{
+                "errors": {
                     "method": requesMethod,
                     "code": 405,
                     "message": "허용되지 않은 요청 메소드 입니다."

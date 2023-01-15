@@ -36,7 +36,7 @@ export default function Home({ Component, pageProps }: AppProps): JSX.Element {
 // };
 
 // export async function getStaticProps(context: any) {
-//   const file = path.join(process.cwd(), '/src/asset/data.txt');
+//   const file = path.join(process.cwd(), '@/asset/data.txt');
 //   const content = fs.readFileSync(file, 'utf8');
 // return {
 //     props: { content }
