@@ -65,15 +65,15 @@ export default function App({ Component, pageProps, router }: AppProps): JSX.Ele
     <div>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          {loading ? 
-            ( <FullScreenLoading /> ) 
-            : 
+          {loading ?
+            (<FullScreenLoading />)
+            :
             (
               isPassPageAuth
-              ?
-              <Component {...props} />
-              :
-              <Login {...props} />
+                ?
+                <Component {...props} />
+                :
+                <Login {...props} />
             )
           }
           <ReactQueryDevtools />

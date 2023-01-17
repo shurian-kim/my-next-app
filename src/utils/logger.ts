@@ -1,11 +1,3 @@
-enum logLevelEnum {
-  "none" = 0,
-  "error" = 1,
-  "info" = 2,
-  "debug" = 3,
-  "trace" = 4
-}
-
 interface loggerLevelvalueType {
   level: number;
   name: string;
@@ -18,18 +10,27 @@ interface loggerType {
   debug: (...message: any[]) => void;
   trace: (...message: any[]) => void;
 }
+
 class Logger implements loggerType {
 
   private instanceName = "";
   private instanceNameInitFlag = false;
   private readonly loggerLevel = process.env.NEXT_PUBLIC_LOG_LEVEL ?? "";
 
+  private readonly LOG_LEVEL = {
+    "none": 0,
+    "error": 1,
+    "info": 2,
+    "debug": 3,
+    "trace": 4
+  }
+
   private readonly logLevelConst: Record<string, loggerLevelvalueType> = {
-    none: { level: logLevelEnum.none, name: "NONE" },
-    error: { level: logLevelEnum.error, name: "ERROR" },
-    info: { level: logLevelEnum.info, name: "INFO" },
-    debug: { level: logLevelEnum.debug, name: "DEBUG" },
-    trace: { level: logLevelEnum.trace, name: "TRACE" },
+    none: { level: this.LOG_LEVEL.none, name: "NONE" },
+    error: { level: this.LOG_LEVEL.error, name: "ERROR" },
+    info: { level: this.LOG_LEVEL.info, name: "INFO" },
+    debug: { level: this.LOG_LEVEL.debug, name: "DEBUG" },
+    trace: { level: this.LOG_LEVEL.trace, name: "TRACE" },
   };
 
   constructor(instanceName = "") {
@@ -93,9 +94,9 @@ class Logger implements loggerType {
 
       const loggerTag = `[${this.getLogDate()}] ${loggerLevel.name} ${this.getInstanceName()} - `;
 
-      if (loggerLevel.level < logLevelEnum.error || loggerLevel.level > logLevelEnum.trace) return;
+      if (loggerLevel.level < this.LOG_LEVEL.error || loggerLevel.level > this.LOG_LEVEL.trace) return;
 
-      if (loggerLevel.level === logLevelEnum.error) {
+      if (loggerLevel.level === this.LOG_LEVEL.error) {
         (() => { console.error(loggerTag, ...message) })();
         return;
       }
