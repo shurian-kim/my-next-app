@@ -1,7 +1,7 @@
 enum loggerEnum {
   "none" = 0,
   "error" = 1,
-  "info"  = 2,
+  "info" = 2,
   "debug" = 3,
   "trace" = 4
 }
@@ -33,11 +33,11 @@ class Logger implements loggerType {
   };
 
   constructor(instanceName = "") {
-    this.setInstanceNameInitFlag(instanceName.length>0);
+    this.setInstanceNameInitFlag(instanceName.length > 0);
     this.setInstanceName(instanceName);
   }
 
-  private setInstanceNameInitFlag(instanceNameInitFlag:boolean):void{
+  private setInstanceNameInitFlag(instanceNameInitFlag: boolean): void {
     this.instanceNameInitFlag = instanceNameInitFlag
   }
 
@@ -45,25 +45,25 @@ class Logger implements loggerType {
    * 로그 출력할 instance명을 지정한다.
    * @param instanceName 로그 instance명
    */
-  public setInstanceName = (instanceName: string) : void => {
-    if(instanceName !== "/")
+  public setInstanceName = (instanceName: string): void => {
+    if (instanceName !== "/")
       this.instanceName = instanceName;
   };
 
   private readonly getInstanceName = (): string => {
 
-    if(!this.instanceNameInitFlag){
+    if (!this.instanceNameInitFlag) {
       this.setInstanceName("");
     }
 
-    if ( this.instanceName === "" && typeof window !== "undefined") {
+    if (this.instanceName === "" && typeof window !== "undefined") {
       this.setInstanceName(window.location.pathname);
-      
+
       if (this.instanceName.includes("/")) {
         const instanceNameArr: string[] = this.instanceName.split("/");
 
-        for(let instanceIdx = instanceNameArr.length-1; instanceIdx > 0; instanceIdx--){
-          if(instanceNameArr[instanceIdx].length>0){
+        for (let instanceIdx = instanceNameArr.length - 1; instanceIdx > 0; instanceIdx--) {
+          if (instanceNameArr[instanceIdx].length > 0) {
             this.setInstanceName(instanceNameArr[instanceIdx]);
             break;
           }
@@ -74,8 +74,8 @@ class Logger implements loggerType {
   };
 
   private readonly getLoggerLevel = (): loggerLevelvalueType => {
-    
-    if(this.loggerLevel in this.logLevelConst){
+
+    if (this.loggerLevel in this.logLevelConst) {
       return this.logLevelConst[this.loggerLevel];
     }
 
@@ -94,13 +94,13 @@ class Logger implements loggerType {
       const loggerTag = `[${this.getLogDate()}] ${loggerLevel.name} ${this.getInstanceName()} - `;
 
       if (loggerLevel.level < loggerEnum.error || loggerLevel.level > loggerEnum.trace) return;
-      
+
       if (loggerLevel.level === loggerEnum.error) {
-        console.error(loggerTag, ...message);
+        (() => { console.error(loggerTag, ...message) })();
         return;
       }
-      
-      console.log(loggerTag, ...message);
+
+      (() => { console.log(loggerTag, ...message) })();
     }
   };
 
