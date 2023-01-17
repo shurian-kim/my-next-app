@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { logger } from '@/utils/logger';
 
 const instance = axios.create({
     baseURL: 'http://localhost:8080',
@@ -22,7 +23,7 @@ axios.interceptors.request.use(function (config) {
     // 요청이 전달되기 전에 작업 수행
 
     const accessTockerValue = localStorage.getItem(_ACCESS_TOCKEN);
-    console.log('localStoreage getItem accessTockerValue = ', accessTockerValue);
+    logger.debug('localStoreage getItem accessTockerValue = ', accessTockerValue);
 
     instance.defaults.headers.common.Authorization = accessTockerValue;
     return config;
@@ -37,7 +38,7 @@ axios.interceptors.response.use(function (response) {
     // 응답 데이터가 있는 작업 수행
 
     const accessTockenValue = `Bearer ${response.headers?.Authorization ?? ''}`;
-    console.log('response accessTockenValue = ', accessTockenValue);
+    logger.debug('response accessTockenValue = ', accessTockenValue);
 
     localStorage.setItem(_ACCESS_TOCKEN ?? '', accessTockenValue);
 

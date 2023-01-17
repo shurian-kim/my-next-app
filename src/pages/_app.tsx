@@ -8,11 +8,12 @@ import { RecoilRoot } from 'recoil';
 import { passPageAuth } from '@/utils/authenticator';
 import Login from './login';
 import FullScreenLoading from "@/components/FullScreenLoading";
+import { logger } from '@/utils/logger';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      onError: (error): void => { console.log((error as any).message) }
+      onError: (error): void => { logger.debug((error as any).message) }
     },
   },
   queryCache: new QueryCache({
@@ -20,7 +21,7 @@ export const queryClient = new QueryClient({
       // 🎉 이미 캐시에 데이터가 있는 경우에만 오류 알림을 표시합니다.
       // 이는 백그라운드 업데이트가 실패했음을 의미합니다.
       if (query.state.data !== undefined) {
-        console.error(`Something went wrong:`, (error as any).message)
+        logger.debug(`Something went wrong:`, (error as any).message)
       }
     },
   })
@@ -51,24 +52,29 @@ export default function App({ Component, pageProps, router }: AppProps): JSX.Ele
   }, []);
 
   const props: any = { ...pageProps }
+  logger.debug("props : ", props);
 
   const isPassPageAuth: boolean = passPageAuth(router)
   if (!isPassPageAuth) {
     props.redirectUrl = router.pathname;
   }
 
-  return loading ? (
-    <FullScreenLoading />
-  ) : (
+  logger.debug("isPassPageAuth : ", isPassPageAuth)
+
+  return (
     <div>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          {
-            isPassPageAuth
+          {loading ? 
+            ( <FullScreenLoading /> ) 
+            : 
+            (
+              isPassPageAuth
               ?
               <Component {...props} />
               :
               <Login {...props} />
+            )
           }
           <ReactQueryDevtools />
         </QueryClientProvider>

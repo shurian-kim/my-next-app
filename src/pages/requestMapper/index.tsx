@@ -5,6 +5,7 @@ import { parseBody } from "next/dist/server/api-utils/node"; // node 12.2
 import { useRouter } from 'next/router';
 // import getRowBody from "row-body"
 import { useState, useEffect } from 'react';
+import { logger } from '@/utils/logger';
 
 interface serverSideProps {
     method: string
@@ -17,19 +18,19 @@ const postRequestTest = (props: serverSideProps): JSX.Element => {
     const router = useRouter();
 
     useEffect(()=>{
-        console.log('router.query => ', router.query);
+        logger.debug('router.query => ', router.query);
     },[router.query])
 
     useEffect(() => {
         if (typeof props !== "undefined") {
-            console.log("setPostParams >>>>>>>>>>>>>>")
+            logger.debug("setPostParams >>>>>>>>>>>>>>")
             setPostParams(props);
         }
     }, [props]);
 
     useEffect(() => {
         if (typeof postPrams !== "undefined") {
-            console.log("postRequestTest props = ", postPrams);
+            logger.debug("postRequestTest props = ", postPrams);
         }
     }, [postPrams])
 
@@ -60,10 +61,10 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     } catch (e) {
         console.error(e);
         requestParam = await parseBody(context.req, '1mb');
-        console.log('catch requestParam : ', requestParam);
+        logger.debug('catch requestParam : ', requestParam);
     }
 
-    console.log(`[${method}]requestParam ====>>>>> `, requestParam);
+    logger.debug(`[${method}]requestParam ====>>>>> `, requestParam);
 
     return {
         props: {

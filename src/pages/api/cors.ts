@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Cors from 'cors'
 import runMiddleware from 'src/middleware/runMiddleare';
+import { logger } from '@/utils/logger';
 
 // Initializing the cors middleware
 // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
@@ -26,7 +27,7 @@ export default async function handler(
       break;
   }
 
-  console.log(`[${req.method ?? ""}] requestParams : `, requestParams);
+  logger.debug(`[${req.method ?? ""}] requestParams : `, requestParams);
 
   // Rest of the API logic
   res.json({ message: requestParams })

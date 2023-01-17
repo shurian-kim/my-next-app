@@ -1,11 +1,12 @@
 import Script from 'next/script';
 import AppLayout from 'src/components/layout/AppLayout';
+import { logger } from '@/utils/logger';
 
 export default function KakaoTest(): JSX.Element {
 
     function kakaoInit(): void { // 페이지가 로드되면 실행
         window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
-        console.log(window.Kakao.isInitialized());
+        logger.debug(window.Kakao.isInitialized());
     }
     return (
         <AppLayout>

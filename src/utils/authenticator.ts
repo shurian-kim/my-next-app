@@ -2,6 +2,7 @@ import { Router } from "next/router";
 import { checkAuthorization } from "src/api/auth/AuthCheck";
 import { PublicPathManager } from "./PublicPathManager";
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { logger } from '@/utils/logger';
 
 /**
  * 페이지 권한 통과 여부
@@ -50,11 +51,11 @@ export const requestPermitedCheck = (req: NextApiRequest, res: NextApiResponse, 
     if (requestDomainMatcher !== null) {
         requestRefererDomain = requestDomainMatcher[0];
     }
-    console.log('requestReferer : ', requestReferer);
-    console.log("requestRefererDomain : ", requestRefererDomain);
+    logger.debug('requestReferer : ', requestReferer);
+    logger.debug("requestRefererDomain : ", requestRefererDomain);
 
     const allowedUrls = [...allowOptions?.origin ?? [], ...['http://localhost:8080', 'https://localhost:8080', 'http://localhost:3000', 'https://localhost:3000']];
-    console.log("permittedUrls.includes(requestRefererDomain) : ", allowedUrls.includes(requestRefererDomain));
+    logger.debug("permittedUrls.includes(requestRefererDomain) : ", allowedUrls.includes(requestRefererDomain));
 
     if (!allowedUrls.includes(requestRefererDomain)) {
         res.status(401).send(
@@ -69,7 +70,7 @@ export const requestPermitedCheck = (req: NextApiRequest, res: NextApiResponse, 
     }
     // const requesMethod = req.method === "GET" ? 'PUT' : req.method ?? "";
 
-    console.log(`METHOD : ${requesMethod}`);
+    logger.debug(`METHOD : ${requesMethod}`);
     const allowedMethods = allowOptions?.methods ?? ["GET", "HEAD", "POST", "PUT", "DELETE"];
     if (!allowedMethods.includes(requesMethod)) {
         res.status(405).send(

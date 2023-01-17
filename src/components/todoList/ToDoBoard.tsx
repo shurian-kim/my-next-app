@@ -7,7 +7,7 @@ const ToDoBoard = (props: TodoListProps): JSX.Element => {
         <div>
             <h1>To Do Board</h1>
             {props.todoList.map((element: string, index: number) => {
-                // console.log('ToDoBoard props.removeItem typeof : ', typeof (props.removeItem) === 'function')
+                // logger.debug('ToDoBoard props.removeItem typeof : ', typeof (props.removeItem) === 'function')
                 return <TodoItem
                     key={`${element}${index}`}
                     todoItem={element}

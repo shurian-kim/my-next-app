@@ -1,82 +1,138 @@
-interface loggerLevelType {
+enum loggerEnum {
+  "none" = 0,
+  "error" = 1,
+  "info"  = 2,
+  "debug" = 3,
+  "trace" = 4
+}
+
+interface loggerLevelvalueType {
   level: number;
   name: string;
 }
+
 interface loggerType {
-  setInstanceName(serviceName: string): void;
-  error(...message: any[]): void;
-  info(...message: any[]): void;
-  debug(...message: any[]): void;
-  trace(...message: any[]): void;
+  setInstanceName: (serviceName: string) => void;
+  error: (...message: any[]) => void;
+  info: (...message: any[]) => void;
+  debug: (...message: any[]) => void;
+  trace: (...message: any[]) => void;
 }
 class Logger implements loggerType {
-  private instanceName = "";
-  private loggerLevel: string = process.env.NEXT_PUBLIC_LOG_LEVEL || "";
 
-  private logLevelConst: { [key: string]: loggerLevelType } = {
-    error: { level: 1, name: "ERROR" },
-    info: { level: 2, name: "INFO" },
-    debug: { level: 3, name: "DEBUG" },
-    trace: { level: 4, name: "TRACE" },
+  private instanceName = "";
+  private instanceNameInitFlag = false;
+  private readonly loggerLevel = process.env.NEXT_PUBLIC_LOG_LEVEL ?? "";
+
+  private readonly logLevelConst: Record<string, loggerLevelvalueType> = {
+    none: { level: loggerEnum.none, name: "NONE" },
+    error: { level: loggerEnum.error, name: "ERROR" },
+    info: { level: loggerEnum.info, name: "INFO" },
+    debug: { level: loggerEnum.debug, name: "DEBUG" },
+    trace: { level: loggerEnum.trace, name: "TRACE" },
   };
 
-  constructor(instanceName: string) {
+  constructor(instanceName = "") {
+    this.setInstanceNameInitFlag(instanceName.length>0);
     this.setInstanceName(instanceName);
   }
 
-  public setInstanceName = (instanceName: string) => {
-    this.instanceName = instanceName;
+  private setInstanceNameInitFlag(instanceNameInitFlag:boolean):void{
+    this.instanceNameInitFlag = instanceNameInitFlag
+  }
+
+  /**
+   * 로그 출력할 instance명을 지정한다.
+   * @param instanceName 로그 instance명
+   */
+  public setInstanceName = (instanceName: string) : void => {
+    if(instanceName !== "/")
+      this.instanceName = instanceName;
   };
 
-  private getInstanceName = (): string => {
-    if (this.instanceName === "" && typeof window !== "undefined") {
-      this.instanceName = window.location.pathname;
+  private readonly getInstanceName = (): string => {
 
-      if (this.instanceName.indexOf("/") != -1) {
+    if(!this.instanceNameInitFlag){
+      this.setInstanceName("");
+    }
+
+    if ( this.instanceName === "" && typeof window !== "undefined") {
+      this.setInstanceName(window.location.pathname);
+      
+      if (this.instanceName.includes("/")) {
         const instanceNameArr: string[] = this.instanceName.split("/");
 
-        this.instanceName = instanceNameArr[instanceNameArr.length - 1];
+        for(let instanceIdx = instanceNameArr.length-1; instanceIdx > 0; instanceIdx--){
+          if(instanceNameArr[instanceIdx].length>0){
+            this.setInstanceName(instanceNameArr[instanceIdx]);
+            break;
+          }
+        }
       }
     }
     return this.instanceName;
   };
 
-  private getLoggerLevel = (): loggerLevelType => {
-    if (this.logLevelConst[logger.loggerLevel]) {
-      return this.logLevelConst[logger.loggerLevel];
+  private readonly getLoggerLevel = (): loggerLevelvalueType => {
+    
+    if(this.loggerLevel in this.logLevelConst){
+      return this.logLevelConst[this.loggerLevel];
     }
-    return { level: 0, name: "" };
+
+    return this.logLevelConst.none;
   };
 
-  private getLogDate = (): string => {
+  private readonly getLogDate = (): string => {
     const now = new Date();
     return now.toISOString();
   };
 
-  private log = (loggerLevel: loggerLevelType, ...message: any[]): void => {
+  private readonly log = (loggerLevel: loggerLevelvalueType, ...message: any[]): void => {
+
     if (this.getLoggerLevel().level >= loggerLevel.level) {
+
       const loggerTag = `[${this.getLogDate()}] ${loggerLevel.name} ${this.getInstanceName()} - `;
-      if (loggerLevel.level === 1) {
+
+      if (loggerLevel.level < loggerEnum.error || loggerLevel.level > loggerEnum.trace) return;
+      
+      if (loggerLevel.level === loggerEnum.error) {
         console.error(loggerTag, ...message);
         return;
       }
+      
       console.log(loggerTag, ...message);
     }
   };
 
-  error = (...message: any[]) => {
+  /**
+   * error 레벨의 로그
+   * @param message 로그메시지
+   */
+  error = (...message: any[]): void => {
     this.log(this.logLevelConst.error, ...message);
   };
 
-  info = (...message: any[]) => {
+  /**
+   * info 레벨의 로그
+   * @param message 로그메시지
+   */
+  info = (...message: any[]): void => {
     this.log(this.logLevelConst.info, ...message);
   };
 
-  debug = (...message: any[]) => {
+  /**
+   * debug 레벨의 로그
+   * @param message 로그메시지
+   */
+  debug = (...message: any[]): void => {
     this.log(this.logLevelConst.debug, ...message);
   };
 
-  trace = (...message: any[]) => {
+  /**
+   * trace 레벨의 로그
+   * @param message 로그메시지
+   */
+  trace = (...message: any[]): void => {
     this.log(this.logLevelConst.trace, ...message);
   };
 }

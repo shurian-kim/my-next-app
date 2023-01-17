@@ -4,6 +4,7 @@ import runMiddleware from 'src/middleware/runMiddleare';
 import { getQueryString } from 'src/utils/StringUtils';
 import { requestPermitedCheck } from 'src/utils/authenticator';
 // import { setCookie } from 'src/utils/cookies'
+import { logger } from '@/utils/logger';
 
 const cors = Cors({ methods: ['POST', 'GET', 'HEAD'] })
 
@@ -39,11 +40,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             requestParams = req.query;
             break;
     }
-    console.log(`[${requesMethod ?? ""}] requestParams : `, requestParams);
+    logger.debug(`[${requesMethod ?? ""}] requestParams : `, requestParams);
     // parameter LOG E
 
     const redirectUrl = `/requestMapper${getQueryString(req)}`;
-    console.log("redirectURL = ", redirectUrl);
+    logger.debug("redirectURL = ", redirectUrl);
 
     // res.status(200).json(requestParams);
     res.status(200).redirect(redirectUrl);

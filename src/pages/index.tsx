@@ -6,8 +6,8 @@ import AppLayout from 'src/components/layout/AppLayout'
 // import path from 'path'
 
 export default function Home({ Component, pageProps }: AppProps): JSX.Element {
-  // console.log('process.env.NEXT_PUBLIC_ACCESS_TOCKEN = ', process.env.NEXT_PUBLIC_ACCESS_TOCKEN)
-  // console.log(pageProps)
+  // logger.debug('process.env.NEXT_PUBLIC_ACCESS_TOCKEN = ', process.env.NEXT_PUBLIC_ACCESS_TOCKEN)
+  // logger.debug(pageProps)
   return (
     <AppLayout>
       토큰 : {process.env.NEXT_PUBLIC_ACCESS_TOCKEN}
@@ -18,8 +18,8 @@ export default function Home({ Component, pageProps }: AppProps): JSX.Element {
 // ### 서버 실행 환경 (Server Side Rendering)
 // export const getServerSideProps: GetServerSideProps = async (context) => {
 //   // 서버에서는 모든 환경변수를 참조할 수 있다.
-//   // console.log(process.env.NEXT_PUBLIC_ACCESS_TOCKEN); // default_value
-//   // console.log(process.env.NEXT_PUBLIC_ACCESS_TOCKEN); // default_api_key
+//   // logger.debug(process.env.NEXT_PUBLIC_ACCESS_TOCKEN); // default_value
+//   // logger.debug(process.env.NEXT_PUBLIC_ACCESS_TOCKEN); // default_api_key
 
 //   return { props: { message: `Next.js is awesome` } };
 // };

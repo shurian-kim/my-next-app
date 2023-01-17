@@ -1,6 +1,7 @@
 import { useState } from "react"
 import AppLayout from "src/components/layout/AppLayout";
 import ToDoBoard from 'src/components/todoList/ToDoBoard';
+import { logger } from '@/utils/logger';
 
 const TodoList = (): JSX.Element => {
     const [inputValue, setInputValue] = useState<string>('')
@@ -24,7 +25,7 @@ const TodoList = (): JSX.Element => {
         setInputValue(e.target.value)
     }
 
-    console.log('render todoList = ', todoList)
+    logger.debug('render todoList = ', todoList)
     return (
         <AppLayout>
             <input type="text" value={inputValue} onChange={changeInputValue} placeholder="할일을 입력하세요." />

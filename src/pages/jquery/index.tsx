@@ -1,13 +1,14 @@
 import Script from "next/script"
 import { useEffect, useState } from "react"
 import AppLayout from "src/components/layout/AppLayout"
+import { logger } from '@/utils/logger';
 
 const JqueryTest = (): JSX.Element => {
 
     const [cloneHtml, setCloleHtml] = useState<string>('')
 
     const initJquery = (): void => {
-        console.log(`initJquery window.jQuery = `, window.jQuery)
+        logger.debug(`initJquery window.jQuery = `, window.jQuery)
         setCloleHtml(window.jQuery('#jQueryTest').html())
     }
 
@@ -17,8 +18,8 @@ const JqueryTest = (): JSX.Element => {
     }
 
     useEffect(() => {
-        console.log(`window = `, window)
-        console.log(`useEffect window.jQuery =`, window.jQuery)
+        logger.debug(`window = `, window)
+        logger.debug(`useEffect window.jQuery =`, window.jQuery)
     }, [])
 
     return (

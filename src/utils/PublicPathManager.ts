@@ -9,7 +9,7 @@ class PublicPathManager {
         // "/toDoList",
     ]
 
-    constructor() { }
+    // constructor() { }
 
     #getPublicPath(): string[] {
         return this.#pulbicPath;
