@@ -90,19 +90,19 @@ class Logger implements loggerType {
 
   private readonly log = (loggerLevel: loggerLevelvalueType, ...message: any[]): void => {
 
+    if (loggerLevel.level < this.LOG_LEVEL.error || loggerLevel.level > this.LOG_LEVEL.trace) return;
+
+    const loggerTag = `[${this.getLogDate()}] ${loggerLevel.name} ${this.getInstanceName()} - `;
+
+    if (loggerLevel.level === this.LOG_LEVEL.error) {
+      (() => { console.error(loggerTag, ...message) })();
+      return;
+    }
+
     if (this.getLoggerLevel().level >= loggerLevel.level) {
-
-      const loggerTag = `[${this.getLogDate()}] ${loggerLevel.name} ${this.getInstanceName()} - `;
-
-      if (loggerLevel.level < this.LOG_LEVEL.error || loggerLevel.level > this.LOG_LEVEL.trace) return;
-
-      if (loggerLevel.level === this.LOG_LEVEL.error) {
-        (() => { console.error(loggerTag, ...message) })();
-        return;
-      }
-
       (() => { console.log(loggerTag, ...message) })();
     }
+
   };
 
   /**
