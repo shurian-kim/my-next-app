@@ -1,11 +1,13 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import AppLayout from "src/components/layout/AppLayout";
 import ToDoBoard from 'src/components/todoList/ToDoBoard';
+import { AuthContext } from "@/pages/_app";
 import { logger } from '@/utils/logger';
 
 const TodoList = (): JSX.Element => {
     const [inputValue, setInputValue] = useState<string>('')
     const [todoList, setTodoList] = useState<string[]>([])
+    const { accessToken } = useContext(AuthContext);
 
     const addItem = (): void => {
         if (inputValue.trim().length < 1) {
@@ -31,6 +33,7 @@ const TodoList = (): JSX.Element => {
             <input type="text" value={inputValue} onChange={changeInputValue} placeholder="할일을 입력하세요." />
             <button onClick={addItem}>추가</button>
             <ToDoBoard todoList={todoList} removeItem={removeItem}></ToDoBoard>
+            accessToken : {accessToken}
         </AppLayout>
     )
 }

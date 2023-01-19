@@ -1,14 +1,25 @@
 import '@/styles/globals.css';
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext, Dispatch, SetStateAction, useMemo } from "react";
 import type { AppProps } from 'next/app';
 import Router from "next/router";
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { RecoilRoot } from 'recoil';
-import { passPageAuth } from '@/utils/authenticator';
+import { publicPathChecker } from '@/utils/authenticator';
 import Login from './login';
 import FullScreenLoading from "@/components/FullScreenLoading";
 import { logger } from '@/utils/logger';
+
+interface IAuthContext {
+  accessToken?: string;
+  setAccessToken?: Dispatch<SetStateAction<string>>;
+  refreshToken?: string;
+  setRefreshToken?: Dispatch<SetStateAction<string>>;
+  removeToken?: boolean;
+  setRemoveToken?: Dispatch<SetStateAction<boolean>>;
+}
+
+export const AuthContext = createContext<IAuthContext>({});
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,16 +39,34 @@ export const queryClient = new QueryClient({
 })
 
 export default function App({ Component, pageProps, router }: AppProps): JSX.Element {
-  const [loading, setLoading] = useState(false);
+
+  const props: any = { ...pageProps }
+  logger.debug("props : ", props);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
+  const [removeToken, setRemoveToken] = useState(false);
+  const authContextValue = useMemo(() => {
+    return {
+      accessToken, setAccessToken,
+      refreshToken, setRefreshToken,
+      removeToken, setRemoveToken,
+    }
+  }, [accessToken, setAccessToken,
+    refreshToken, setRefreshToken,
+    removeToken, setRemoveToken,]);
+
 
   useEffect(() => {
+
     const start = (): void => {
       // NProgress.start();
-      setLoading(true);
+      setIsLoading(true);
     };
     const end = (): void => {
       // NProgress.done();
-      setLoading(false);
+      setIsLoading(false);
     };
 
     Router.events.on("routeChangeStart", start);
@@ -51,34 +80,57 @@ export default function App({ Component, pageProps, router }: AppProps): JSX.Ele
     };
   }, []);
 
-  const props: any = { ...pageProps }
-  logger.debug("props : ", props);
+  const renderComponent = (): JSX.Element => {
 
-  const isPassPageAuth: boolean = passPageAuth(router)
-  if (!isPassPageAuth) {
-    props.redirectUrl = router.pathname;
+    logger.debug("accessToken : ", accessToken)
+
+    let accessTokenAuthFlag = accessToken?.length > 0;
+    logger.debug("accessTokenAuthFlag : ", accessTokenAuthFlag);
+
+    if (typeof sessionStorage !== "undefined") {
+
+      logger.debug("removeToken : ", removeToken);
+      if (removeToken) {
+        sessionStorage.removeItem("token");
+        accessTokenAuthFlag = false;
+        setRemoveToken(false);
+      }
+
+      if ((sessionStorage.getItem("token") ?? "").length > 0) {
+        accessTokenAuthFlag = true;
+      }
+
+      if (accessTokenAuthFlag) {
+        sessionStorage.setItem("token", accessToken);
+      }
+    }
+
+    if (isLoading) {
+      return (<FullScreenLoading />)
+    }
+
+    const isPublicPath: boolean = publicPathChecker(router)
+    logger.debug("isPublicPath : ", isPublicPath)
+
+    if (isPublicPath || (!isPublicPath && accessTokenAuthFlag)) {
+      return (<Component {...props} />)
+    }
+
+    if (!isPublicPath) {
+      props.redirectUrl = router.pathname;
+    }
+
+    return (<Login {...props} />)
   }
 
-  logger.debug("isPassPageAuth : ", isPassPageAuth)
-
   return (
-    <div>
+    <AuthContext.Provider value={authContextValue}>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          {loading ?
-            (<FullScreenLoading />)
-            :
-            (
-              isPassPageAuth
-                ?
-                <Component {...props} />
-                :
-                <Login {...props} />
-            )
-          }
+          {renderComponent()}
           <ReactQueryDevtools />
         </QueryClientProvider>
       </RecoilRoot>
-    </div>
+    </AuthContext.Provider>
   )
 }
