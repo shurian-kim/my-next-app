@@ -17,7 +17,7 @@ const Logout = (props: any): JSX.Element => {
             setAccessToken("");
             setRefreshToken("");
         }
-    }, [])
+    }, [setAccessToken, setRefreshToken, setRemoveToken])
     return (
         <AppLayout>
             <div>로그아웃</div>

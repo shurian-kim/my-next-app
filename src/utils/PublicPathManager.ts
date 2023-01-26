@@ -5,6 +5,8 @@ class PublicPathManager {
         '/500',
         "/toDoList",
         "/requestMapper",
+        "/login",
+        "/login/loginProcess"
         // "/kakao",
         // "/toDoList",
     ]

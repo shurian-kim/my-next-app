@@ -2,12 +2,18 @@ import Link from 'next/link';
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import hMenuStyle from 'src/styles/Header.module.css'
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 // import classNames from 'classnames';
 // import sMenuStyle from '@/styles/Sidebar.module.css'
 // import PropTypes from 'prop-types'
 
 const AppLayout = ({ children }: { children: ReactNode }): JSX.Element => {
+
+    const [isLogin, setIsLogin] = useState<boolean>(false);
+
+    useEffect(() => {
+        setIsLogin((sessionStorage.getItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN ?? "") ?? "").length > 0);
+    }, [])
     return (
         <div className={styles.container}>
             <Head>
@@ -41,7 +47,14 @@ const AppLayout = ({ children }: { children: ReactNode }): JSX.Element => {
                             <li><Link href="/jquery">jQuery</Link></li>
                             <li><Link href="/kakao">kakao</Link></li>
                             <li><Link href="/toDoList">todoList</Link></li>
-                            <li><Link href="/logout">logout</Link></li>
+                            {isLogin
+                                ? (
+                                    <li><Link href="/logout">logout</Link></li>
+                                )
+                                : (
+                                    <li><Link href="/login/loginProcess">Login</Link></li>
+                                )
+                            }
                         </ul>
                         <i className={[hMenuStyle.fab, hMenuStyle.fa_twitter_squar].join(' ')}></i>
                         <i className={[hMenuStyle.fas, hMenuStyle.fa_bars].join(' ')}></i>

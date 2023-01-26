@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import AppLayout from "src/components/layout/AppLayout";
 import ToDoBoard from 'src/components/todoList/ToDoBoard';
 import { AuthContext } from "@/pages/_app";

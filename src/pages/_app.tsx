@@ -41,9 +41,9 @@ export const queryClient = new QueryClient({
 export default function App({ Component, pageProps, router }: AppProps): JSX.Element {
 
   const props: any = { ...pageProps }
-  logger.debug("props : ", props);
+  // logger.debug("props : ", props);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isPageLoading, setIsLoading] = useState(false);
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
   const [removeToken, setRemoveToken] = useState(false);
@@ -57,8 +57,11 @@ export default function App({ Component, pageProps, router }: AppProps): JSX.Ele
     refreshToken, setRefreshToken,
     removeToken, setRemoveToken,]);
 
+  const [seStorage, setSeStorage] = useState<Storage | null>(null);
 
   useEffect(() => {
+
+    setSeStorage(window.sessionStorage);
 
     const start = (): void => {
       // NProgress.start();
@@ -80,46 +83,55 @@ export default function App({ Component, pageProps, router }: AppProps): JSX.Ele
     };
   }, []);
 
-  const renderComponent = (): JSX.Element => {
+  const renderComponent = (): JSX.Element | undefined => {
 
-    logger.debug("accessToken : ", accessToken)
+    // logger.debug("accessToken : ", accessToken)
 
     let accessTokenAuthFlag = accessToken?.length > 0;
-    logger.debug("accessTokenAuthFlag : ", accessTokenAuthFlag);
+    // logger.debug("accessTokenAuthFlag : ", accessTokenAuthFlag);
 
-    if (typeof sessionStorage !== "undefined") {
+    if (seStorage !== null) {
 
       logger.debug("removeToken : ", removeToken);
       if (removeToken) {
-        sessionStorage.removeItem("token");
+        seStorage.removeItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN ?? "");
         accessTokenAuthFlag = false;
         setRemoveToken(false);
       }
 
-      if ((sessionStorage.getItem("token") ?? "").length > 0) {
+      if (accessTokenAuthFlag) {
+        seStorage.setItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN ?? "", accessToken);
+      }
+
+      if ((seStorage.getItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN ?? "") ?? "").length > 0) {
         accessTokenAuthFlag = true;
       }
 
-      if (accessTokenAuthFlag) {
-        sessionStorage.setItem("token", accessToken);
-      }
     }
 
-    if (isLoading) {
+    if (isPageLoading) {
+      logger.debug("isPageLoading is true : FullScreenLoading Rendering");
       return (<FullScreenLoading />)
     }
 
-    const isPublicPath: boolean = publicPathChecker(router)
-    logger.debug("isPublicPath : ", isPublicPath)
+    let isPublicPath: boolean = publicPathChecker(router)
+    // logger.debug("isPublicPath : ", isPublicPath)
 
-    if (isPublicPath || (!isPublicPath && accessTokenAuthFlag)) {
+    if (accessTokenAuthFlag) {
+      isPublicPath = true;
+    }
+
+    if (isPublicPath) {
+      logger.debug(`isPublicPath is true : Component Rendering`);
       return (<Component {...props} />)
     }
+
 
     if (!isPublicPath) {
       props.redirectUrl = router.pathname;
     }
 
+    logger.debug("isPublicPath is false : Login Rendering");
     return (<Login {...props} />)
   }
 

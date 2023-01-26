@@ -1,27 +1,33 @@
 import { AppProps } from 'next/app'
 import AppLayout from 'src/components/layout/AppLayout'
-import { AuthContext } from "@/pages/_app";
-import { useContext, useEffect } from 'react';
 // import { GetServerSideProps } from 'next/types'
 // import fetch from 'node-fetch'
 // import fs from 'fs';
 // import path from 'path'
+import { useEffect, useState } from 'react';
 
 export default function Home({ Component, pageProps }: AppProps): JSX.Element {
   // logger.debug('process.env.NEXT_PUBLIC_ACCESS_TOCKEN = ', process.env.NEXT_PUBLIC_ACCESS_TOCKEN)
   // logger.debug(pageProps)
+  const [accessToken, setAccessToken] = useState<string>("");
 
-  const { accessToken, setAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
-    if (typeof setAccessToken !== "undefined") {
-      setAccessToken("Bearer AWS4-HMAC-SHA256");
-    }
+    setAccessToken(sessionStorage.getItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN ?? "") ?? "");
   }, [])
 
   return (
     <AppLayout>
-      토큰 : {accessToken}
+      {accessToken.length > 0
+        ? (
+          <>
+            <div>환영합니다</div>
+            <div>토큰 : {accessToken}</div>
+          </>
+        )
+        : (
+          <div>로그인 해주세요!!</div>
+        )}
     </AppLayout>
   )
 }
