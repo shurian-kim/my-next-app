@@ -26,23 +26,26 @@ export default function AuthComponent({ Component, pageProps, router, Loading, L
 
     useEffect(() => {
 
-        const start = (): void => {
-            setIsLoading(true);
-        };
-        const end = (): void => {
-            setIsLoading(false);
-        };
+        if (typeof Loading !== "undefined") {
 
-        Router.events.on("routeChangeStart", start);
-        Router.events.on("routeChangeComplete", end);
-        Router.events.on("routeChangeError", end);
+            const start = (): void => {
+                setIsLoading(true);
+            };
+            const end = (): void => {
+                setIsLoading(false);
+            };
 
-        return () => {
-            Router.events.off("routeChangeStart", start);
-            Router.events.off("routeChangeComplete", end);
-            Router.events.off("routeChangeError", end);
-        };
-    }, []);
+            Router.events.on("routeChangeStart", start);
+            Router.events.on("routeChangeComplete", end);
+            Router.events.on("routeChangeError", end);
+
+            return () => {
+                Router.events.off("routeChangeStart", start);
+                Router.events.off("routeChangeComplete", end);
+                Router.events.off("routeChangeError", end);
+            };
+        }
+    }, [Loading]);
 
     const renderComponent = (): JSX.Element => {
 

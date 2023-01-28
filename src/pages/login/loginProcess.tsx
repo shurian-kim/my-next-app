@@ -14,7 +14,7 @@ const LoginProcess = ({ Component, pageProps }: AppProps): JSX.Element => {
     useEffect(() => {
         setAccessToken("Bearer AWS4-HMAC-SHA256");
         setRefreshToken("Bearer Refresh-AWS4-HMAC-SHA256");
-    }, [setAccessToken, setRefreshToken])
+    }, [setAccessToken, setRefreshToken]);
 
     return (
         <AppLayout>
