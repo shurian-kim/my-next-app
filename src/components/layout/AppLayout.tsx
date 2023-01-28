@@ -49,7 +49,7 @@ const AppLayout = ({ children }: { children: ReactNode }): JSX.Element => {
                             <li><Link href="/toDoList">todoList</Link></li>
                             {isLogin
                                 ? (
-                                    <li><Link href="/logout">logout</Link></li>
+                                    <li><Link href="/logout">Logout</Link></li>
                                 )
                                 : (
                                     <li><Link href="/login/loginProcess">Login</Link></li>

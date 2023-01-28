@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import AppLayout from "src/components/layout/AppLayout";
 import ToDoBoard from 'src/components/todoList/ToDoBoard';
-import { AuthContext } from "@/pages/_app";
+import { AuthContext } from "@/components/auth/AuthComponentProvidor";
 import { logger } from '@/utils/logger';
 
 const TodoList = (): JSX.Element => {
