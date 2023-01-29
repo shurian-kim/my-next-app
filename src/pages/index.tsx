@@ -5,12 +5,10 @@ import AppLayout from 'src/components/layout/AppLayout'
 // import fs from 'fs';
 // import path from 'path'
 import { useEffect, useState } from 'react';
+// import { logger } from '@/utils/logger';
 
 export default function Home({ Component, pageProps }: AppProps): JSX.Element {
-  // logger.debug('process.env.NEXT_PUBLIC_ACCESS_TOCKEN = ', process.env.NEXT_PUBLIC_ACCESS_TOCKEN)
-  // logger.debug(pageProps)
   const [accessToken, setAccessToken] = useState<string>("");
-
 
   useEffect(() => {
     setAccessToken(sessionStorage.getItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN ?? "") ?? "");

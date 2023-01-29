@@ -2,10 +2,10 @@ import { logger } from "./utils/logger";
 import { useContext, useEffect, useState } from "react";
 import { Router } from "next/router";
 import { AuthContext } from "./AuthComponentProvidor";
-import type { IAuthComponentProps as IAuthComponentPropsType , IAuthContext as IAuthContextType } from "./interface/AuthInterface"
+import type { IAuthComponentProps as IAuthComponentPropsType, IAuthContext as IAuthContextType } from "./interface/AuthInterface"
 
-export interface IAuthComponentProps extends IAuthComponentPropsType{};
-export interface IAuthContext extends IAuthContextType{};
+export interface IAuthComponentProps extends IAuthComponentPropsType { };
+export interface IAuthContext extends IAuthContextType { };
 
 export default function AuthComponent({ Component, pageProps, router, Loading, Login, pathChecker, logLevel = "info" }: IAuthComponentProps): JSX.Element {
 
@@ -49,7 +49,7 @@ export default function AuthComponent({ Component, pageProps, router, Loading, L
         const refreshTokenAuthFlag = refreshToken?.length > 0;
         let pageLoadingFlag = isPageLoading;
 
-        if (accessTokenStorage !==null && refreshTokenStorage !== null) {
+        if (accessTokenStorage !== null && refreshTokenStorage !== null) {
 
             const accessTokenStorageAccessTokenFlag = (accessTokenStorage.getItem(accessTokenKey) ?? "").length > 0;
             if (!accessTokenAuthFlag && accessTokenStorageAccessTokenFlag) {

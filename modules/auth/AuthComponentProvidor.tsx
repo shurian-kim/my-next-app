@@ -2,15 +2,15 @@ import { logger } from "./utils/logger";
 import { createContext, ReactElement, SetStateAction, useEffect, useMemo, useState } from "react";
 import type { IAuthComponentProvidorProps as IAuthComponentProvidorPropsType, IAuthComponentProvidorOptions as IAuthComponentProvidorOptionsType, IAuthContext as IAuthContextType } from './interface/AuthInterface';
 
-export interface IAuthComponentProvidorProps extends IAuthComponentProvidorPropsType{};
-export interface IAuthComponentProvidorOptions extends IAuthComponentProvidorOptionsType{};
-export interface IAuthContext extends IAuthContextType{};
+export interface IAuthComponentProvidorProps extends IAuthComponentProvidorPropsType { };
+export interface IAuthComponentProvidorOptions extends IAuthComponentProvidorOptionsType { };
+export interface IAuthContext extends IAuthContextType { };
 
 export const AuthComponentProvidorConst = {
-    _ACCESS_TOKEN_KEY : "accessToken",
+    _ACCESS_TOKEN_KEY: "accessToken",
     _REFRESH_TOKEN_KEY: "refreshToken",
-    _LOCAL_STORAGE : "localStorage",
-    _SESSION_STORAGE : "sessionStorage"
+    _LOCAL_STORAGE: "localStorage",
+    _SESSION_STORAGE: "sessionStorage"
 }
 
 export const AuthContext = createContext<IAuthContext>({
