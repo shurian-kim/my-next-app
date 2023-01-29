@@ -1,9 +1,12 @@
 import { AppProps } from 'next/app'
 import AppLayout from 'src/components/layout/AppLayout'
-import { AuthContext, IAuthContext } from "@/components/auth/AuthComponentProvidor";
+import { AuthContext, IAuthContext } from "modules/auth/AuthComponentProvidor";
 import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import apiService from '@/api/axios/api'
+import { JwtTokenType } from 'modules/jwt/jwtUtil'
+import { logger } from '@/utils/logger';
 
 const LoginProcess = ({ Component, pageProps }: AppProps): JSX.Element => {
     const { accessToken, setAccessToken, setRefreshToken } = useContext<IAuthContext>(AuthContext);
@@ -12,8 +15,20 @@ const LoginProcess = ({ Component, pageProps }: AppProps): JSX.Element => {
     const redirectUrl = router.query?.redirectUrl as string ?? "";
 
     useEffect(() => {
-        setAccessToken("Bearer AWS4-HMAC-SHA256");
-        setRefreshToken("Bearer Refresh-AWS4-HMAC-SHA256");
+
+        apiService.post('/api/webToken').then((response)=>{
+
+            const tokenInfo:JwtTokenType = response.data;
+
+            logger.debug('tokenInfo.accessToken : ', tokenInfo.accessToken);
+            logger.debug('tokenInfo.refreshToken : ', tokenInfo.refreshToken);
+
+            setAccessToken(tokenInfo.accessToken);
+            setRefreshToken(tokenInfo.refreshToken);
+        }).catch((error:any)=>{
+            logger.error(error);
+        });
+
     }, [setAccessToken, setRefreshToken]);
 
     return (
@@ -33,7 +48,7 @@ const LoginProcess = ({ Component, pageProps }: AppProps): JSX.Element => {
                     }
                 </>
             )
-                : <>로그인 실패 ㅠㅠ</>
+                : <>로그인중입니다...</>
             }
         </AppLayout>
     )

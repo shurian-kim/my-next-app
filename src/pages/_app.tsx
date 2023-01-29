@@ -4,8 +4,8 @@ import { QueryCache, QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { RecoilRoot } from 'recoil';
 import { logger } from '@/utils/logger';
-import AuthComponentProvidor, { IAuthComponentProvidorOptions, AuthComponentProvidorConst } from "@/components/auth/AuthComponentProvidor";
-import AuthComponent, { IAuthComponentProps } from '@/components/auth/AuthComponent';
+import AuthComponentProvidor, { IAuthComponentProvidorOptions, AuthComponentProvidorConst } from "modules/auth/AuthComponentProvidor";
+import AuthComponent, { IAuthComponentProps } from 'modules/auth/AuthComponent';
 import FullScreenLoading from '@/components/FullScreenLoading';
 import { publicPathChecker } from "@/utils/authenticator";
 import Login from './login';

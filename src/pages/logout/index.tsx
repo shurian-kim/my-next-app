@@ -1,7 +1,7 @@
 import AppLayout from "src/components/layout/AppLayout"
 import { logger } from '@/utils/logger';
 import { useContext, useEffect } from "react"
-import { AuthContext } from "@/components/auth/AuthComponentProvidor";
+import { AuthContext } from "modules/auth/AuthComponentProvidor";
 import { useRouter } from 'next/router';
 
 const Logout = (props: any): JSX.Element => {

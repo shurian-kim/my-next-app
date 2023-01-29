@@ -2,18 +2,18 @@ import axios from 'axios'
 import { logger } from '@/utils/logger';
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://localhost:3000',
     timeout: 1000,
-    headers: { 'Authorization': `Bearer ${Math.random()}` },
-    proxy: {
-        protocol: 'http',
-        host: '127.0.0.1',
-        port: 8080,
+    // headers: { 'Authorization': `Bearer ${Math.random()}` },
+    // proxy: {
+        // protocol: 'http',
+        // host: '127.0.0.1',
+        // port: 8080,
         // auth: {
         //     username: 'mikeymike',
         //     password: 'rapunz3l'
         // }
-    },
+    // },
 });
 
 const _ACCESS_TOCKEN: string = process.env.NEXT_PUBLIC_ACCESS_TOCKEN ?? '';

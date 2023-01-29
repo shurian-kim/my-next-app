@@ -6,7 +6,7 @@ import { logger } from '@/utils/logger';
 const JqueryTest = (): JSX.Element => {
 
     const [cloneHtml, setCloleHtml] = useState<string>('');
-    const [jQueryLoadFlag, setJqueryLoadFlag] = useState<boolean>();
+    const [jQueryLoadFlag, setJqueryLoadFlag] = useState<boolean>(false);
 
     useEffect(()=>{
 
