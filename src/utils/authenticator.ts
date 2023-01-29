@@ -42,6 +42,10 @@ export interface alowedOptionsType {
  */
 export const requestPermitedCheck = (req: NextApiRequest, res: NextApiResponse, allowOptions?: alowedOptionsType): void => {
 
+    // res.setHeader('Access-Control-Allow-origin', 'http://localhost:8080, https://localhost:8080, http://localhost:3000, https://localhost:3000'); // 출처 허용
+    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // HTTP 메서드 허용
+    // res.setHeader('Access-Control-Allow-Credentials', 'true'); // 클라이언트와 서버 간에 쿠키 주고받기 허용
+
     const requesMethod = req.method ?? "";
     const requestReferer = req.headers.referer ?? "";
     let requestRefererDomain = "";

@@ -22,7 +22,7 @@ const JqueryTest = (): JSX.Element => {
 
     useEffect(()=>{
         if(jQueryLoadFlag){
-            logger.debug("jQuery Load completed : ", window.jQuery);
+            logger.debug("jQuery Load completed !!!");
             setCloleHtml(window.jQuery('#jQueryTest').html());
         }
     },[jQueryLoadFlag])

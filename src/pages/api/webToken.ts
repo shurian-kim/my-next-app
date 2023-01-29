@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { jwtUtil, JwtTokenType } from 'modules/jwt/jwtUtil'
 import { logger } from '@/utils/logger';
+import { setCookie } from '@/utils/cookies';
 
 logger.setInstanceName("webToken API");
 
@@ -27,6 +28,8 @@ export default async function handler(
 
     res.setHeader('Authorization', `Bearer ${jwtToken.accessToken}`);
 
-    res.setHeader('Set-Cookie', `accessToken=${jwtToken.accessToken}; refreshToken=${jwtToken.refreshToken} path=/;`)
+    setCookie(res, "token", jwtToken, {});
+    // res.setHeader('Set-Cookie', `accessToken=${jwtToken.accessToken}; refreshToken=${jwtToken.refreshToken} path=/;`);
+
     res.status(200).json({ accessToken: jwtToken.accessToken, refreshToken: jwtToken.refreshToken })
 }

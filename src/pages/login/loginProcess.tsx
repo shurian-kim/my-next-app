@@ -20,8 +20,8 @@ const LoginProcess = ({ Component, pageProps }: AppProps): JSX.Element => {
 
             const tokenInfo:JwtTokenType = response.data;
 
-            logger.debug('tokenInfo.accessToken : ', tokenInfo.accessToken);
-            logger.debug('tokenInfo.refreshToken : ', tokenInfo.refreshToken);
+            // logger.debug('/api/webToken tokenInfo.accessToken : ', tokenInfo.accessToken);
+            // logger.debug('/api/webToken tokenInfo.refreshToken : ', tokenInfo.refreshToken);
 
             setAccessToken(tokenInfo.accessToken);
             setRefreshToken(tokenInfo.refreshToken);

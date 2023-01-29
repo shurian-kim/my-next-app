@@ -6,7 +6,11 @@ import { requestPermitedCheck } from 'src/utils/authenticator';
 // import { setCookie } from 'src/utils/cookies'
 import { logger } from '@/utils/logger';
 
-const cors = Cors({ methods: ['POST', 'GET', 'HEAD'] })
+const cors = Cors({ 
+    methods: ['POST', 'GET', 'HEAD'],
+    allowedHeaders: ['http://localhost:8080', 'https://localhost:8080', 'http://localhost:3000', 'https://localhost:3000'],
+    origin: ['http://localhost:8080', 'https://localhost:8080', 'http://localhost:3000', 'https://localhost:3000']
+})
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
 
