@@ -6,32 +6,34 @@ import { logger } from '@/utils/logger';
 const JqueryTest = (): JSX.Element => {
 
     const [cloneHtml, setCloleHtml] = useState<string>('');
-    const [jqueryInitFlag, setJqueryInitFlag] = useState<boolean>(false);
+    const [jQueryLoadFlag, setJqueryLoadFlag] = useState<boolean>();
 
-    const initJquery = (): void => {
-        logger.debug("init!!! jquery!!!");
-        setJqueryInitFlag(true);
-    }
+    useEffect(()=>{
 
-    useEffect(() => {
-        if (jqueryInitFlag) {
-            logger.debug(`jqueryInitFlag = `, jqueryInitFlag);
+        // jquery load test
+        const jqueryLoadInterval = setInterval(()=>{
+            if(typeof window?.jQuery !== "undefined"){
+                clearInterval(jqueryLoadInterval);
+                setJqueryLoadFlag(true);
+            }
+        }, 100);
+
+    }, [])
+
+    useEffect(()=>{
+        if(jQueryLoadFlag){
+            logger.debug("jQuery Load completed : ", window.jQuery);
             setCloleHtml(window.jQuery('#jQueryTest').html());
         }
-    }, [jqueryInitFlag])
+    },[jQueryLoadFlag])
 
     const jqTest = (): void => {
         setCloleHtml(`${window.jQuery('#jQueryTest').html() as string} Click!!`);
     }
 
-    useEffect(() => {
-        logger.debug(`window = `, window)
-        logger.debug(`useEffect window.jQuery =`, window.jQuery)
-    }, [])
-
     return (
         <AppLayout>
-            <Script strategy="afterInteractive" src="https://code.jquery.com/jquery-3.6.1.min.js" onLoad={initJquery} />
+            <Script strategy="afterInteractive" src="https://code.jquery.com/jquery-3.6.1.min.js" />
             <div id="jQueryTest" onClick={jqTest}>제이쿼리 테스트</div>
             <div>{cloneHtml}</div>
         </AppLayout>

@@ -1,24 +1,18 @@
+import { logger } from "./utils/logger";
 import { useContext, useEffect, useState } from "react";
-import { NextComponentType, NextPageContext } from "next";
 import { Router } from "next/router";
-import { publicPathChecker } from "@/utils/authenticator";
-import { AuthContext, IAuthContext } from "./AuthComponentProvidor";
-import { logger } from "@/utils/logger";
+import { AuthContext } from "./AuthComponentProvidor";
+import type { IAuthComponentProps as IAuthComponentPropsType , IAuthContext as IAuthContextType } from "./interface/AuthInterface"
 
-export interface AuthComponentProps {
-    Component: NextComponentType<NextPageContext, any, any>;
-    router: Router;
-    pageProps?: any;
-    Loading?: (props?: any) => JSX.Element;
-    Login?: (props?: any) => JSX.Element;
-    accessTokenKey?: string;
-    refreshTokenKey?: string;
-}
+export interface IAuthComponentProps extends IAuthComponentPropsType{};
+export interface IAuthContext extends IAuthContextType{};
 
-export default function AuthComponent({ Component, pageProps, router, Loading, Login }: AuthComponentProps): JSX.Element {
+export default function AuthComponent({ Component, pageProps, router, Loading, Login, pathChecker, logLevel = "info" }: IAuthComponentProps): JSX.Element {
 
-    const { accessToken, refreshToken, authStorage, accessTokenKey, refreshTokenKey } = useContext<IAuthContext>(AuthContext);
+    logger.setInstanceName("AuthComponent");
+    logger.setLogLevel(logLevel);
 
+    const { accessToken, refreshToken, accessTokenKey, refreshTokenKey, accessTokenStorage, refreshTokenStorage } = useContext<IAuthContext>(AuthContext);
 
     const props: any = { ...pageProps }
 
@@ -49,23 +43,23 @@ export default function AuthComponent({ Component, pageProps, router, Loading, L
 
     const renderComponent = (): JSX.Element => {
 
-        let isPublicPath: boolean = publicPathChecker(router)
+        let isPublicPath: boolean = typeof pathChecker !== "undefined" ? pathChecker(router) : true;
 
         const accessTokenAuthFlag = accessToken?.length > 0;
         const refreshTokenAuthFlag = refreshToken?.length > 0;
         let pageLoadingFlag = isPageLoading;
 
-        if (authStorage !== null) {
+        if (accessTokenStorage !==null && refreshTokenStorage !== null) {
 
-            const authStorageAccessTokenFlag = (authStorage.getItem(accessTokenKey) ?? "").length > 0;
-            if (!accessTokenAuthFlag && authStorageAccessTokenFlag) {
-                authStorage.setItem(accessTokenKey, accessToken);
+            const accessTokenStorageAccessTokenFlag = (accessTokenStorage.getItem(accessTokenKey) ?? "").length > 0;
+            if (!accessTokenAuthFlag && accessTokenStorageAccessTokenFlag) {
+                accessTokenStorage.setItem(accessTokenKey, accessToken);
                 pageLoadingFlag = true;
             }
 
-            const authStorageRefreshTokenFlag = (authStorage.getItem(refreshTokenKey) ?? "").length > 0;
-            if (!refreshTokenAuthFlag && authStorageRefreshTokenFlag) {
-                authStorage.setItem(refreshTokenKey, refreshToken);
+            const refreshTokenStorageRefreshTokenFlag = (refreshTokenStorage.getItem(refreshTokenKey) ?? "").length > 0;
+            if (!refreshTokenAuthFlag && refreshTokenStorageRefreshTokenFlag) {
+                refreshTokenStorage.setItem(refreshTokenKey, refreshToken);
             }
 
             if (pageLoadingFlag) {

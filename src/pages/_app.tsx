@@ -4,9 +4,10 @@ import { QueryCache, QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { RecoilRoot } from 'recoil';
 import { logger } from '@/utils/logger';
-import AuthComponentProvidor, { AuthComponentProvidorOptions } from "@/components/auth/AuthComponentProvidor";
-import AuthComponent, { AuthComponentProps } from '@/components/auth/AuthComponent';
+import AuthComponentProvidor, { IAuthComponentProvidorOptions, AuthComponentProvidorConst } from "@/components/auth/AuthComponentProvidor";
+import AuthComponent, { IAuthComponentProps } from '@/components/auth/AuthComponent';
 import FullScreenLoading from '@/components/FullScreenLoading';
+import { publicPathChecker } from "@/utils/authenticator";
 import Login from './login';
 
 export const queryClient = new QueryClient({
@@ -30,17 +31,22 @@ export default function App({ Component, pageProps, router }: AppProps): JSX.Ele
 
   const props: any = { ...pageProps }
 
-  const authComponentProps: AuthComponentProps = {
+  const authComponentProps: IAuthComponentProps = {
     Component,
     router,
     pageProps: props,
     Loading: FullScreenLoading,
     Login,
+    pathChecker: publicPathChecker,
+    logLevel: process.env.NEXT_PUBLIC_LOG_LEVEL,
   }
 
-  const authProvidorOptions: AuthComponentProvidorOptions = {
+  const authProvidorOptions: IAuthComponentProvidorOptions = {
     accessTokenKey: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
-    refreshTokenKey: process.env.NEXT_PUBLIC_REFRESH_TOKEN
+    accessTokenStorage: AuthComponentProvidorConst._SESSION_STORAGE,
+    refreshTokenKey: process.env.NEXT_PUBLIC_REFRESH_TOKEN,
+    refreshTokenStorage: AuthComponentProvidorConst._LOCAL_STORAGE,
+    logLevel: process.env.NEXT_PUBLIC_LOG_LEVEL,
   }
 
   return (
