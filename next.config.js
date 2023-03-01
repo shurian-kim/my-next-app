@@ -9,7 +9,18 @@ const nextConfig = {
     removeConsole:{ // console.log 제거 옵션
       exclude: ['error'],
     }
-  }
+  },
+  images: {
+    domains: ['c:'],
+    // remotePatterns: [
+    //   {
+    //     protocol: 'https',
+    //     hostname: 'example.com',
+    //     port: '',
+    //     pathname: '/account123/**',
+    //   },
+    // ],
+  },
   // "distDir": "build",
   // "exportTrailingSlash": true,
   // "assetPrefix": "https://~~~"
