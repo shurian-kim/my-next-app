@@ -1,5 +1,4 @@
 import { AppProps } from 'next/app'
-import AppLayout from 'src/components/layout/AppLayout'
 // import { GetServerSideProps } from 'next/types'
 // import fetch from 'node-fetch'
 // import fs from 'fs';
@@ -15,7 +14,7 @@ export default function Home({ Component, pageProps }: AppProps): JSX.Element {
   }, [])
 
   return (
-    <AppLayout>
+    <>
       {accessToken.length > 0
         ? (
           <>
@@ -26,7 +25,7 @@ export default function Home({ Component, pageProps }: AppProps): JSX.Element {
         : (
           <div>로그인 해주세요!!</div>
         )}
-    </AppLayout>
+    </>
   )
 }
 

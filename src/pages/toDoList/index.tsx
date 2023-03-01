@@ -1,5 +1,4 @@
 import { useContext, useState } from "react"
-import AppLayout from "src/components/layout/AppLayout";
 import ToDoBoard from 'src/components/todoList/ToDoBoard';
 import { AuthContext } from "modules/auth/AuthComponentProvidor";
 import { logger } from '@/utils/logger';
@@ -29,12 +28,12 @@ const TodoList = (): JSX.Element => {
 
     logger.debug('render todoList = ', todoList)
     return (
-        <AppLayout>
+        <>
             <input type="text" value={inputValue} onChange={changeInputValue} placeholder="할일을 입력하세요." />
             <button onClick={addItem}>추가</button>
             <ToDoBoard todoList={todoList} removeItem={removeItem}></ToDoBoard>
             accessToken : {accessToken}
-        </AppLayout>
+        </>
     )
 }
 

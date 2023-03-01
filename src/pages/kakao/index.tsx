@@ -1,5 +1,4 @@
 import Script from 'next/script';
-import AppLayout from 'src/components/layout/AppLayout';
 import { logger } from '@/utils/logger';
 
 export default function KakaoTest(): JSX.Element {
@@ -9,9 +8,9 @@ export default function KakaoTest(): JSX.Element {
         logger.debug(window.Kakao.isInitialized());
     }
     return (
-        <AppLayout>
+        <>
             <Script src='https://developers.kakao.com/sdk/js/kakao.js' onLoad={kakaoInit}></Script>
             <div>카카오!!!!!</div>
-        </AppLayout>
+        </>
     )
 }

@@ -1,4 +1,3 @@
-import AppLayout from "src/components/layout/AppLayout"
 import { logger } from '@/utils/logger';
 import { useContext, useEffect } from "react"
 import { AuthContext } from "modules/auth/AuthComponentProvidor";
@@ -17,9 +16,7 @@ const Logout = (props: any): JSX.Element => {
         void router.replace("/");
     }, [router, setAccessToken, setRefreshToken, setRemoveToken])
     return (
-        <AppLayout>
-            <div>로그아웃</div>
-        </AppLayout>
+        <div>로그아웃</div>
     )
 }
 
