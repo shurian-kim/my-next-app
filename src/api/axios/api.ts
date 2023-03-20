@@ -6,13 +6,13 @@ const instance = axios.create({
     timeout: 1000,
     // headers: { 'Authorization': `Bearer ${Math.random()}` },
     // proxy: {
-        // protocol: 'http',
-        // host: '127.0.0.1',
-        // port: 8080,
-        // auth: {
-        //     username: 'mikeymike',
-        //     password: 'rapunz3l'
-        // }
+    // protocol: 'http',
+    // host: '127.0.0.1',
+    // port: 8080,
+    // auth: {
+    //     username: 'mikeymike',
+    //     password: 'rapunz3l'
+    // }
     // },
 });
 
@@ -37,7 +37,8 @@ axios.interceptors.response.use(function (response) {
     // 2xx 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
     // 응답 데이터가 있는 작업 수행
 
-    const accessTockenValue = `Bearer ${response.headers?.Authorization ?? ''}`;
+    const authorization: string = response.headers?.Authorization ?? '';
+    const accessTockenValue = `Bearer ${authorization}`;
     logger.debug('response accessTockenValue = ', accessTockenValue);
 
     localStorage.setItem(_ACCESS_TOCKEN ?? '', accessTockenValue);

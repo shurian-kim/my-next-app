@@ -37,14 +37,14 @@ const AppLayout = ({ children }: { children: ReactNode }): JSX.Element => {
                             <li><Link href="/jquery">jQuery</Link></li>
                             <li><Link href="/kakao">kakao</Link></li>
                             <li><Link href="/toDoList">todoList</Link></li>
-                            {isLogin
+                            <li>{isLogin
                                 ? (
-                                    <li><Link href="/logout">Logout</Link></li>
+                                    <Link href="/logout">Logout</Link>
                                 )
                                 : (
-                                    <li><Link href="/login/loginProcess">Login</Link></li>
+                                    <Link href="/login/loginProcess">Login</Link>
                                 )
-                            }
+                            }</li>
                         </ul>
                         <i className={[hMenuStyle.fab, hMenuStyle.fa_twitter_squar].join(' ')}></i>
                         <i className={[hMenuStyle.fas, hMenuStyle.fa_bars].join(' ')}></i>
