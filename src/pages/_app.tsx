@@ -9,6 +9,7 @@ import AuthComponent, { IAuthComponentProps } from 'modules/auth/AuthComponent';
 import FullScreenLoading from '@/components/FullScreenLoading';
 import { publicPathChecker } from "@/utils/authenticator";
 import Login from './login';
+import AppLayout from '@/components/layout/AppLayout';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,7 +54,9 @@ export default function App({ Component, pageProps, router }: AppProps): JSX.Ele
     <AuthComponentProvidor options={authProvidorOptions}>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          <AuthComponent {...authComponentProps} />
+          <AppLayout>
+            <AuthComponent {...authComponentProps} />
+          </AppLayout>
           <ReactQueryDevtools />
         </QueryClientProvider>
       </RecoilRoot>

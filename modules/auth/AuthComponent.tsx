@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { Router } from "next/router";
 import { AuthContext } from "./AuthComponentProvidor";
 import type { IAuthComponentProps as IAuthComponentPropsType, IAuthContext as IAuthContextType } from "./interface/AuthInterface"
-import AppLayout from "@/components/layout/AppLayout";
 
 export interface IAuthComponentProps extends IAuthComponentPropsType { };
 export interface IAuthContext extends IAuthContextType { };
@@ -107,9 +106,5 @@ export default function AuthComponent({ Component, pageProps, router, Loading, L
         return <></>;
     }
 
-    return (
-        <AppLayout>
-            {renderComponent()}
-        </AppLayout>
-    )
+    return renderComponent();
 }
