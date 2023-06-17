@@ -1,3 +1,4 @@
+import { Button, VStack } from "@chakra-ui/react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 
@@ -7,30 +8,27 @@ const About = (): JSX.Element => {
 
     return (
         <>
-            <h1>About!!1</h1>
-            <h2>About!!2</h2>
-            <h3>About!!3</h3>
-            <div>
+            <VStack>
                 <Link href={"Hello"} style={{
                     margin: '10px'
                 }}>돌아가기</Link>
-                <button type="button" style={{
+                <Button type="button" style={{
                     display: 'block',
                     margin: '10px'
-                }} onClick={() => { router.back() }}>History Back!!</button>
-                <button type="button" style={
+                }} onClick={() => { router.back() }}>History Back!!</Button>
+                <Button type="button" style={
                     {
                         display: 'block',
                         margin: '10px'
                     }
-                } onClick={() => { void router.push('Hello'); return false; }}>Router Push!!</button>
-                <button type="button" style={
+                } onClick={() => { void router.push('Hello'); return false; }}>Router Push!!</Button>
+                <Button type="button" style={
                     {
                         display: 'block',
                         margin: '10px'
                     }
-                } onClick={() => { void router.replace('Hello'); return false; }}>Router Replace!!</button>
-            </div>
+                } onClick={() => { void router.replace('Hello'); return false; }}>Router Replace!!</Button>
+            </VStack>
         </>
     )
 }
