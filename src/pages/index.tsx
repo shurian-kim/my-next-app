@@ -4,6 +4,7 @@ import { AppProps } from 'next/app'
 // import fs from 'fs';
 // import path from 'path'
 import { useEffect, useState } from 'react';
+import Login from '@/pages/login';
 // import { logger } from '@/utils/logger';
 
 export default function Home({ Component, pageProps }: AppProps): JSX.Element {
@@ -23,7 +24,7 @@ export default function Home({ Component, pageProps }: AppProps): JSX.Element {
           </>
         )
         : (
-          <div>로그인 해주세요!!</div>
+          <Login>로그인 해주세요!!</Login>
         )}
     </>
   )

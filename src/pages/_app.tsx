@@ -10,6 +10,18 @@ import FullScreenLoading from '@/components/FullScreenLoading';
 import { publicPathChecker } from "@/utils/authenticator";
 import Login from '@/pages/login';
 import AppLayout from '@/components/layout/AppLayout';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+
+// 2. Extend the theme to include custom colors, fonts, etc
+const colors = {
+  brand: {
+    900: '#1a365d',
+    800: '#153e75',
+    700: '#2a69ac',
+  },
+}
+export const theme = extendTheme({ colors })
+
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,9 +66,11 @@ export default function DjkApp({ Component, pageProps, router }: AppProps): JSX.
     <AuthComponentProvidor options={authProvidorOptions}>
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
-          <AppLayout>
-            <AuthComponent {...authComponentProps} />
-          </AppLayout>
+          <ChakraProvider theme={theme}>
+            <AppLayout>
+              <AuthComponent {...authComponentProps} />
+            </AppLayout>
+          </ChakraProvider>
           <ReactQueryDevtools />
         </QueryClientProvider>
       </RecoilRoot>

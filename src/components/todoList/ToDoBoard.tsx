@@ -1,11 +1,12 @@
+import { Heading, VStack } from '@chakra-ui/react';
 import TodoItem from './ToDoItem';
 import type { TodoListProps } from 'src/interface/todoList/TodoListType'
 
 const ToDoBoard = (props: TodoListProps): JSX.Element => {
 
     return (
-        <div>
-            <h1>To Do Board</h1>
+        <VStack align={"stretch"} marginTop={"2em"}>
+            <Heading>To Do Board</Heading>
             {props.todoList.map((element: string, index: number) => {
                 // logger.debug('ToDoBoard props.removeItem typeof : ', typeof (props.removeItem) === 'function')
                 return <TodoItem
@@ -21,7 +22,7 @@ const ToDoBoard = (props: TodoListProps): JSX.Element => {
                             : undefined}
                 ></TodoItem>
             })}
-        </div >
+        </VStack >
     )
 }
 

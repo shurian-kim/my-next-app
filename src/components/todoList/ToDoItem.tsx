@@ -1,3 +1,4 @@
+import { Button, Flex } from '@chakra-ui/react'
 import type { TodoItemProps } from 'src/interface/todoList/TodoListType'
 
 const TodoItem = (props: TodoItemProps): JSX.Element => {
@@ -6,14 +7,14 @@ const TodoItem = (props: TodoItemProps): JSX.Element => {
     }
 
     return (
-        <div style={{ marginTop: '10px' }}>
+        <Flex p={2}>
             {props.todoItem}
             {
                 typeof props.removeItem !== "undefined" ?
-                    <button style={{ marginLeft: '10px' }} onClick={onClickRemove}>삭제</button>
+                    <Button size={"sm"} colorScheme={"red"} marginLeft={"3"} onClick={onClickRemove}>삭제</Button>
                     : null
             }
-        </div>
+        </Flex>
     )
 }
 
