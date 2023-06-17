@@ -23,13 +23,13 @@ const About = (): JSX.Element => {
                         display: 'block',
                         margin: '10px'
                     }
-                } onClick={() => async () => await router.push('Hello')}>Router Push!!</button>
+                } onClick={() => { void router.push('Hello'); return false; }}>Router Push!!</button>
                 <button type="button" style={
                     {
                         display: 'block',
                         margin: '10px'
                     }
-                } onClick={() => async () => await router.replace('Hello')}>Router Replace!!</button>
+                } onClick={() => { void router.replace('Hello'); return false; }}>Router Replace!!</button>
             </div>
         </>
     )

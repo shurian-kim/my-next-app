@@ -1,7 +1,10 @@
-import Link from "next/link"
+import { Button, Heading, Input, Flex, VStack } from "@chakra-ui/react"
+import { useRouter } from "next/router"
 import React, { useState } from "react"
 
 const Hello = (): JSX.Element => {
+
+    const router = useRouter();
     const [cnt, setCnt] = useState<number>(1)
 
     const increaseCnt = (increaseCnt: number): void => {
@@ -12,17 +15,17 @@ const Hello = (): JSX.Element => {
         setCnt(1)
     }
     return (
-        <div style={{ margin: '10px' }}>
-            <div>Hello</div>
-            <input type="text" id="cnt" className="inputCss" value={cnt} readOnly />
-            <button id="btn" className="btnCss" style={{ marginLeft: '10px' }} onClick={event => { increaseCnt(2) }}>카운트 해보자!!</button>
-            <button id="btnInit" className="btnCssInit" style={{ marginLeft: '10px' }} onClick={initCnt}>초기화!!</button>
-            <div>
-                <Link href={"About"}>
-                    About Go!!
-                </Link>
-            </div>
-        </div>
+        <VStack spacing={4} align={"stretch"}>
+            <Heading>Hello</Heading>
+            <Flex align={"stretch"}>
+                <Input type="text" id="cnt" className="inputCss" value={cnt} readOnly width={"500px"} />
+                <Button key="btn" size={"sm"} colorScheme={"blue"} marginLeft={"3"} width={"150px"} onClick={event => { increaseCnt(2) }}>카운트 해보자!!</Button>
+                <Button key="btnInit" size={"sm"} colorScheme={"red"} marginLeft={"3"} width={"150px"} onClick={initCnt}>초기화!!</Button>
+            </Flex>
+            <Button onClick={() => { void router.push({ pathname: "./About" }); return false; }}>
+                About Go!!
+            </Button>
+        </VStack>
     )
 }
 

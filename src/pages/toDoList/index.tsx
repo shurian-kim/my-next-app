@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import ToDoBoard from 'src/components/todoList/ToDoBoard';
 import { AuthContext } from "modules/auth/AuthComponentProvidor";
 import { Input, InputGroup, InputRightAddon, Stack, VStack, Text, useToast, Alert, AlertIcon, Box, CloseButton, AlertTitle, AlertDescription } from '@chakra-ui/react'
@@ -10,6 +10,7 @@ const TodoList = (): JSX.Element => {
     const { accessToken } = useContext(AuthContext);
     // const toast = useToast();
     const [todoErrorFlag, setTodoErrorFlag] = useState<boolean>(false);
+    const iptRef = useRef<HTMLInputElement>(null);
 
     const addItem = (): void => {
         if (inputValue.trim().length < 1) {
@@ -40,25 +41,26 @@ const TodoList = (): JSX.Element => {
         <>
             <VStack spacing={4} align={"stretch"}>
                 <InputGroup size='sm' width={"500px"}>
-                    <Input type="text" value={inputValue} onChange={changeInputValue} onClick={() => { setTodoErrorFlag(false); }} placeholder="할일을 입력하세요." />
-                    <InputRightAddon onClick={() => { setInputValue("") }} marginRight={3}>X</InputRightAddon>
-                    <InputRightAddon onClick={addItem} bgColor={"blue.500"} color={"white"}>추가</InputRightAddon>
+                    <Input type="text" ref={iptRef} value={inputValue} onChange={changeInputValue} onClick={() => { setTodoErrorFlag(false); }} placeholder="할일을 입력하세요." />
+                    <InputRightAddon onClick={() => { setInputValue("") }} marginRight={3} cursor={"pointer"} title="삭제">X</InputRightAddon>
+                    <InputRightAddon onClick={addItem} bgColor={"blue.500"} color={"white"} cursor={"pointer"}>추가</InputRightAddon>
                 </InputGroup>
                 {todoErrorFlag && (
                     <Alert status='error' width={"500px"}>
                         <AlertIcon />
                         <Box width={"500px"}>
                             <AlertTitle>Error!</AlertTitle>
-                            <AlertDescription>
+                            <AlertDescription role="alert">
                                 할일을 입력해 주세요!
                             </AlertDescription>
                         </Box>
                         <CloseButton
+                            title="오류창 닫기"
                             alignSelf='flex-start'
                             position='relative'
                             right={-1}
                             top={-1}
-                            onClick={() => { setTodoErrorFlag(false); }}
+                            onClick={() => { setTodoErrorFlag(false); iptRef.current?.focus() }}
                         />
                     </Alert>
                 )}
