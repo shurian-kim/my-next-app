@@ -38,6 +38,7 @@ const AppLayout = ({ children }: { children: ReactNode }): JSX.Element => {
                             <li><Link href="/jquery">jQuery</Link></li>
                             <li><Link href="/kakao">kakao</Link></li>
                             <li><Link href="/toDoList">todoList</Link></li>
+                            <li><Link href="/notice/list">Notice</Link></li>
                             <li>{isLogin
                                 ? (
                                     <Link href="/logout">Logout</Link>
