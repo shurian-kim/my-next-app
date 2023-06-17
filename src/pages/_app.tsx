@@ -8,7 +8,7 @@ import AuthComponentProvidor, { IAuthComponentProvidorOptions, AuthComponentProv
 import AuthComponent, { IAuthComponentProps } from 'modules/auth/AuthComponent';
 import FullScreenLoading from '@/components/FullScreenLoading';
 import { publicPathChecker } from "@/utils/authenticator";
-import Login from './login';
+import Login from '@/pages/login';
 import AppLayout from '@/components/layout/AppLayout';
 
 export const queryClient = new QueryClient({
