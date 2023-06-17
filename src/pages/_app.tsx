@@ -28,7 +28,7 @@ export const queryClient = new QueryClient({
   })
 })
 
-export default function App({ Component, pageProps, router }: AppProps): JSX.Element {
+export default function DjkApp({ Component, pageProps, router }: AppProps): JSX.Element {
 
   const props: any = { ...pageProps }
 
