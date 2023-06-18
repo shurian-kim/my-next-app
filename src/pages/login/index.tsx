@@ -18,7 +18,7 @@ const Login = (props?: any): JSX.Element => {
         <Flex height={"50vh"} alignItems={"center"} justifyContent={"center"}>
             <Flex direction={"column"} p={100} bg={"gray.100"} rounded={6}>
                 <Heading mb={6}>로그인</Heading>
-                <Button colorScheme='blue' size={"lg"} onClick={goLogin}>
+                <Button colorScheme='purple' bg={"purple.400"} size={"lg"} onClick={goLogin}>
                     Log in
                 </Button>
             </Flex>

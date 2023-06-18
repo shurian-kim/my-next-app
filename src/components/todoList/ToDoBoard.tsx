@@ -5,7 +5,7 @@ import type { TodoListProps } from 'src/interface/todoList/TodoListType'
 const ToDoBoard = (props: TodoListProps): JSX.Element => {
 
     return (
-        <VStack align={"stretch"} marginTop={"2em"}>
+        <VStack align={"stretch"} mt={"2em"}>
             <Heading>To Do Board</Heading>
             {props.todoList.map((element: string, index: number) => {
                 // logger.debug('ToDoBoard props.removeItem typeof : ', typeof (props.removeItem) === 'function')
