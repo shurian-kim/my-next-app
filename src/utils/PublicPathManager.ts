@@ -6,7 +6,8 @@ class PublicPathManager {
         "/toDoList",
         "/requestMapper",
         "/login",
-        "/login/loginProcess"
+        "/login/loginProcess",
+        "/converter/sqlconverter"
         // "/kakao",
         // "/toDoList",
     ]

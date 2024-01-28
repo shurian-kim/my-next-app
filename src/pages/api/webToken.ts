@@ -12,6 +12,9 @@ export default async function handler(
 
     let remoteAddress = "";
 
+    logger.debug('referer : ', req?.headers.referer);
+    logger.debug('host : ', req?.headers.host);
+
     if (typeof req?.headers !== "undefined") {
         if (typeof req.headers['x-real-ip'] !== "undefined") {
             remoteAddress = req.headers['x-real-ip'] as string;
@@ -23,6 +26,8 @@ export default async function handler(
             remoteAddress = req?.headers.host ?? "";
         }
     }
+
+    logger.debug("remoteAddress : ", remoteAddress);
 
     const jwtToken = await jwtUtil.sign({ userIdx: 1, email: "kdj@mail.com", remoteAddress });
 
